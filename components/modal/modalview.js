@@ -5,7 +5,7 @@ import {
     Text,
     TouchableHighlight} 
 from 'react-native';
-import constants from '../../assets/css/constants'
+import {modal, mainColor} from '../../assets/css/constants'
 
 export default class ModalView extends Component {
     constructor(props) {
@@ -36,7 +36,7 @@ export default class ModalView extends Component {
                     <Text style={styles.description}>{`~ ${item.books[bookIndex].author}, ${item.books[bookIndex].title}`}</Text>
                 </View>
             )
-        } else if(this.props.type === 'mediation') {
+        } else if(this.props.type === 'meditation') {
             return(
                 <View style={styles.container}>
                     <Text style={styles.title}>{item.key}!!!</Text>
@@ -64,26 +64,26 @@ export default class ModalView extends Component {
 const styles = StyleSheet.create({
     container: {
         position: 'absolute',
-        top: -250,
-        padding: constants.modal.padding,
+        top: -350,
+        padding: modal.padding,
         marginBottom: 10,
 
     },
     title: {
-        fontSize: constants.modal.title.fontSize,
+        fontSize: modal.title.fontSize,
         margin: 10,
-        color: 'blue',
+        color: mainColor,
     },
     time: {
-        fontSize: constants.modal.description.fontSize,
+        fontSize: modal.description.fontSize,
         marginLeft: 10,
     },
     description: {
-        fontSize: constants.modal.description.fontSize,
+        fontSize: modal.description.fontSize,
         margin: 10,
     },
     address: {
-    fontSize: constants.modal.description.fontSize,
+    fontSize: modal.description.fontSize,
         margin: 10,
     },
 });

@@ -1,68 +1,61 @@
 import React, { Component } from 'react';
 import { 
     View, 
-    SectionList, 
+    FlatList, 
     StyleSheet,
     Text ,
     TouchableHighlight,
     Dimensions} 
 from 'react-native';
-import ModalView from '../modal/modalview';
+import meditations from './meditations.json'
+import ModalView from '../modal/modalview'
 
 let dim = Dimensions.get('screen')
 
-export default class MediationsScrollView extends Component {
+export default class MeditationsScrollView extends Component {
     constructor(props) {
       super(props);
   
       this.state = {
-        selectedClass: null,
-        item: {
-            title: 'test'
-        }
+        selectedMeditation: null,
+        item: null
       };
 
-      this.showClassInfo = this.showClassInfo.bind(this);
+      this.showMeditationInfo = this.showMeditationInfo.bind(this);
     }
     
-    showClassInfo(item) {
-        this.setState({ item: item, selectedClass: `${item.day} - ${item.title}` })
-        console.log('clicked--', this.state.item)
-
+    showMeditationInfo(item) {
+        this.setState({ item: item})
+        setTimeout(()=> {
+            console.log('show meditation--', this.state.item)
+        }, 300)
     }
 
     componentDidMount() {
-        console.log('meditations mounted')
+        console.log('Meditations did mount', meditations)
+
+        for(const index in meditations.recordings) {
+            console.log('meditation', meditations.recordings[index])
+        }
     }
 
     render() {
-      return (
-        <View style={styles.container}>
-            {this.state.selectedClass &&  <ModalView type={'meditation'} item={this.state.item}/> }
-            {/*<SectionList
-                sections={testData}
-                renderItem={
-                    ({item}) => 
-                        <TouchableHighlight onPress={() => this.showClassInfo(item)}>
-                            <View style={this.state.selectedMeditation === `${item.theme} - ${item.title}` ?  styles.selectedItem : styles.item}>
-                                <Text>{item.title}</Text>
-                            </View>
-                        </TouchableHighlight>
-                }
-                renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.day}</Text>}
-                keyExtractor={(item, index) => index}
-            />*/}
+        if(meditations.recordings) console.log('recordings', meditations.recordings)
+        return (
+            <View style={styles.container}>
+                {this.state.selectedClass &&  <ModalView type={'meditation'} item={this.state.item}/> }
 
-            <SectionList
-                renderItem={({item, index, section}) => <Text key={index}>{item}</Text>}
-                renderSectionHeader={({section: {title}}) => (
-                    <Text style={styles.option}>{title}</Text>
-                )}
-                sections={testData}
-                keyExtractor={(item, index) => item + index}
-            />
-        </View>
-      );
+                <FlatList
+                    style={styles.options}
+                    data={meditations.recordings}
+                    renderItem={({item}) =>
+                        <TouchableHighlight onPress={() => this.showMeditationInfo(item)}> 
+                            <Text style={styles.option}>{item.key}</Text>
+                        </TouchableHighlight>
+                    }
+                />
+            </View>
+        );
     }
 }
 
@@ -77,33 +70,13 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'rgba(247,247,247,1.0)',
         height: dim.height*.4,
-       },
-       sectionHeader: {
-         paddingTop: 20,
-         paddingLeft: 10,
-         paddingRight: 10,
-         paddingBottom: 2,
-         fontSize: 14,
-         fontWeight: 'bold',
-         backgroundColor: 'rgba(247,247,247,1.0)',
-       },
-       item: {
-         padding: 10,
-         fontSize: 18,
-         height: 44,
-         backgroundColor: 'rgba(247,247,247,1.0)',
-       },
-       selectedItem: {
-        padding: 10,
-        fontSize: 18,
-        height: 44,
-        backgroundColor: 'rgba(0,247,247,1.0)',
-      },
-})
-
-const testData = [
-    {
-        title: 'Clear Mind', 
-        data: ['Relax 1', 'Relax 2']
     },
-]
+    options: {
+        padding: 10,
+    },
+    option: {
+        textAlign: 'center',
+        fontSize: 20,
+        padding: 10,
+    }
+})

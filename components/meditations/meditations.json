@@ -1,12 +1,57 @@
 {
-    "meditations": [
+    "recordings": [
         {
-            "title": "Clear Light Mind",
+            "key": "Clear Light Mind",
             "artist": "Kadam Lucy James",
             "duration": "5 minutes",
             "file": "/file/path/to/meditation.mp3"
         },{
-            "title": "Kind Heart",
+            "key": "Kind Heart",
+            "artist": "Kadam Lucy James",
+            "duration": "5 minutes",
+            "file": "/file/path/to/meditation.mp3"
+        },{
+            "key": "Emptiness",
+            "artist": "Kadam Lucy James",
+            "duration": "5 minutes",
+            "file": "/file/path/to/meditation.mp3"
+        },{
+            "key": "Taking & Giving",
+            "artist": "Kadam Lucy James",
+            "duration": "5 minutes",
+            "file": "/file/path/to/meditation.mp3"
+        },{
+            "key": "Kindness of Others",
+            "artist": "Kadam Lucy James",
+            "duration": "5 minutes",
+            "file": "/file/path/to/meditation.mp3"
+        },{
+            "key": "Black & White Breathing",
+            "artist": "Kadam Lucy James",
+            "duration": "5 minutes",
+            "file": "/file/path/to/meditation.mp3"
+        },{
+            "key": "Precious Human Life",
+            "artist": "Kadam Lucy James",
+            "duration": "5 minutes",
+            "file": "/file/path/to/meditation.mp3"
+        },{
+            "key": "Death & Impermanence",
+            "artist": "Kadam Lucy James",
+            "duration": "5 minutes",
+            "file": "/file/path/to/meditation.mp3"
+        },{
+            "key": "Karma",
+            "artist": "Kadam Lucy James",
+            "duration": "5 minutes",
+            "file": "/file/path/to/meditation.mp3"
+        },{
+            "key": "Bliss Boost",
+            "artist": "Kadam Lucy James",
+            "duration": "5 minutes",
+            "file": "/file/path/to/meditation.mp3"
+        },{
+            "key": "Renunciation",
             "artist": "Kadam Lucy James",
             "duration": "5 minutes",
             "file": "/file/path/to/meditation.mp3"

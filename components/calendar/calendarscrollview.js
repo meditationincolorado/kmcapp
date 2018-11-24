@@ -8,6 +8,7 @@ import {
     Dimensions} 
 from 'react-native';
 import ModalView from '../modal/modalview'
+import {mainColor, scrollview} from '../../assets/css/constants'
 
 let dim = Dimensions.get('screen')
 
@@ -73,25 +74,26 @@ const styles = StyleSheet.create({
         height: dim.height*.4,
        },
     sectionHeader: {
-        paddingTop: 20,
-        paddingLeft: 10,
-        paddingRight: 10,
+        padding: scrollview.padding,
+        paddingLeft: scrollview.paddingLeft,
         paddingBottom: 2,
-        fontSize: 14,
+        fontSize: scrollview.fontSize,
         fontWeight: 'bold',
         backgroundColor: '#ffffff',
     },
     item: {
-        padding: 10,
-        fontSize: 18,
-        height: 44,
+        padding: scrollview.padding,
+        paddingLeft: scrollview.paddingLeft,
+        fontSize: scrollview.fontSize,
+        height: scrollview.height,
         backgroundColor: 'transparent',
     },
         selectedItem: {
-        padding: 10,
-        fontSize: 18,
-        height: 44,
-        backgroundColor: 'transparent',
+        padding: scrollview.padding,
+        paddingLeft: scrollview.paddingLeft,
+        fontSize: scrollview.fontSize,
+        height: scrollview.height,
+        backgroundColor: mainColor,
     },
 })
 
