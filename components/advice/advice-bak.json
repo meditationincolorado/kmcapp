@@ -1,0 +1,46 @@
+{
+    "delusions": [
+        {
+            "key": "Anger",
+            "texts": [
+                    {
+                        "text": "Modern Buddhism",
+                        "page": 31,
+                        "quote": "Lorem Ipsum",
+                        "author": "Geshe Kelsang Gyatso"
+                    },{
+                        "text": "Eight Steps to Happiness",
+                        "page": 12,
+                        "quote": "Always rely upon a happy mind alone",
+                        "author": "Geshe Kelsang Gyatso"
+                    },{
+                        "text": "Universal Compassion",
+                        "page": 12,
+                        "quote": "Always rely upon a happy mind alone",
+                        "author": "Geshe Chekawa"
+                    }
+                ]
+        },
+        {
+            "key": "Anger",
+            "texts": [
+                    {
+                        "text": "Modern Buddhism",
+                        "page": 31,
+                        "quote": "Lorem Ipsum",
+                        "author": "Geshe Kelsang Gyatso"
+                    },{
+                        "text": "Eight Steps to Happiness",
+                        "page": 12,
+                        "quote": "Always rely upon a happy mind alone",
+                        "author": "Geshe Kelsang Gyatso"
+                    },{
+                        "text": "Universal Compassion",
+                        "page": 12,
+                        "quote": "Always rely upon a happy mind alone",
+                        "author": "Geshe Chekawa"
+                    }
+                ]
+        }
+    ]
+}

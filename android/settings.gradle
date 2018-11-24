@@ -1,0 +1,3 @@
+rootProject.name = 'kmcapp'
+
+include ':app'

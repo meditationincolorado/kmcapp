@@ -1,0 +1,15 @@
+{
+    "meditations": [
+        {
+            "title": "Clear Light Mind",
+            "artist": "Kadam Lucy James",
+            "duration": "5 minutes",
+            "file": "/file/path/to/meditation.mp3"
+        },{
+            "title": "Kind Heart",
+            "artist": "Kadam Lucy James",
+            "duration": "5 minutes",
+            "file": "/file/path/to/meditation.mp3"
+        }
+    ]
+}
