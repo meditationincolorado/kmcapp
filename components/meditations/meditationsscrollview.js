@@ -7,7 +7,7 @@ import {
     TouchableHighlight,
     Dimensions} 
 from 'react-native';
-import meditations from './meditations.json'
+import {scrollview, mainColor} from '../../assets/css/constants'
 import ModalView from '../modal/modalview'
 
 let dim = Dimensions.get('screen')
@@ -27,23 +27,25 @@ export default class MeditationsScrollView extends Component {
     showMeditationInfo(item) {
         this.setState({ item: item})
         setTimeout(()=> {
-            console.log('show meditation--', this.state.item)
+            console.log('show meditation--',item)
         }, 300)
     }
 
     componentDidMount() {
-        console.log('Meditations did mount', meditations)
+        const temp = this.props.apiResult
+        console.log('Meditations did mount', temp)
 
-        for(const index in meditations.recordings) {
-            console.log('meditation', meditations.recordings[index])
+        for(const index in temp.recordings) {
+            console.log('meditation', temp.recordings[index])
         }
     }
 
     render() {
-        if(meditations.recordings) console.log('recordings', meditations.recordings)
+        const meditations = this.props.apiResult
+
         return (
             <View style={styles.container}>
-                {this.state.selectedClass &&  <ModalView type={'meditation'} item={this.state.item}/> }
+                {this.state.item &&  <ModalView type={'meditation'} item={this.state.item}/> }
 
                 <FlatList
                     style={styles.options}
@@ -69,12 +71,14 @@ const styles = StyleSheet.create({
         paddingTop: 0,
         flex: 1,
         backgroundColor: 'rgba(247,247,247,1.0)',
-        height: dim.height*.4,
+        backgroundColor: scrollview.bkgColor,
+        height: dim.height*scrollview.viewHeightFactor,
     },
     options: {
-        padding: 10,
+        padding: 0,
     },
     option: {
+        color: '#ffffff',
         textAlign: 'center',
         fontSize: 20,
         padding: 10,

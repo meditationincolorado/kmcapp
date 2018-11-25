@@ -46,8 +46,8 @@ export default class CalendarScrollView extends Component {
                     ({item}) => 
                         <TouchableHighlight onPress={() => this.showClassInfo(item)}>
                             <View style={this.state.selectedClass === `${item.day} - ${item.title}` ?  styles.selectedItem : styles.item}>
-                                <Text>{item.title}</Text>
-                                <Text>
+                                <Text style={styles.option}>{item.title}</Text>
+                                <Text style={styles.option}>
                                     {item.location} @ {item.time}
                                 </Text>
                             </View>
@@ -70,8 +70,8 @@ const styles = StyleSheet.create({
         right: 0,
         paddingTop: 0,
         flex: 1,
-        backgroundColor: 'transparent',
-        height: dim.height*.4,
+        backgroundColor: scrollview.bkgColor,
+        height: dim.height*scrollview.viewHeightFactor,
        },
     sectionHeader: {
         padding: scrollview.padding,
@@ -79,7 +79,8 @@ const styles = StyleSheet.create({
         paddingBottom: 2,
         fontSize: scrollview.fontSize,
         fontWeight: 'bold',
-        backgroundColor: '#ffffff',
+        color: '#ffffff',
+        backgroundColor: scrollview.bkgColor,
     },
     item: {
         padding: scrollview.padding,
@@ -87,6 +88,7 @@ const styles = StyleSheet.create({
         fontSize: scrollview.fontSize,
         height: scrollview.height,
         backgroundColor: 'transparent',
+        color: '#ffffff',
     },
         selectedItem: {
         padding: scrollview.padding,
@@ -94,7 +96,16 @@ const styles = StyleSheet.create({
         fontSize: scrollview.fontSize,
         height: scrollview.height,
         backgroundColor: mainColor,
+        color: '#ffffff',
     },
+    options: {
+        padding: 0,
+    },
+    option: {
+        color: scrollview.textColor,
+        fontSize: 15,
+        height: scrollview.optionHeight,
+    }
 })
 
 const testData = [

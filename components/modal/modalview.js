@@ -14,12 +14,14 @@ export default class ModalView extends Component {
     
     renderModal() {
         if(this.props.type === 'class') {
+            const item = this.props.item
+
             return(
                 <View style={styles.container}>
-                    <Text style={styles.title}>{this.props.item.title}</Text>
-                    <Text style={styles.time}>from {this.props.item.time}</Text>
-                    <Text style={styles.description}>{this.props.item.description}</Text>
-                    <Text style={styles.address}>{this.props.item.address}</Text>
+                    <Text style={styles.title}>{item.title}</Text>
+                    <Text style={styles.time}>from {item.time}</Text>
+                    <Text style={styles.description}>{item.description}</Text>
+                    <Text style={styles.address}>{item.address}</Text>
                 </View>
             )
         } else if(this.props.type === 'advice') {
@@ -37,11 +39,14 @@ export default class ModalView extends Component {
                 </View>
             )
         } else if(this.props.type === 'meditation') {
+            const item = this.props.item
+
             return(
                 <View style={styles.container}>
-                    <Text style={styles.title}>{item.key}!!!</Text>
-                    <Text style={styles.description}>{`"${item.books[bookIndex].quotes[quoteIndex].text}"`}</Text>
-                    <Text style={styles.description}>{`~ ${item.books[bookIndex].author}, ${item.books[bookIndex].title}`}</Text>
+                    <Text style={styles.title}>{item.key}</Text>
+                    <Text style={styles.description}>{item.description}</Text>
+                    <Text style={styles.description}>Duration: {item.duration}</Text>
+                    <Text style={styles.description}>with {item.artist}</Text>
                 </View>
             )
         } else {
@@ -67,7 +72,7 @@ const styles = StyleSheet.create({
         top: -350,
         padding: modal.padding,
         marginBottom: 10,
-
+        backgroundColor: modal.bkgColor,
     },
     title: {
         fontSize: modal.title.fontSize,

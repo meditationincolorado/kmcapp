@@ -9,6 +9,7 @@ import {
 from 'react-native';
 import advice from './advice.json'
 import ModalView from '../modal/modalview'
+import {scrollview, mainColor} from '../../assets/css/constants'
 
 let dim = Dimensions.get('screen')
 
@@ -32,11 +33,6 @@ export default class AdviceScrollView extends Component {
     }
 
     componentDidMount() {
-        console.log('Advice did mount', advice)
-
-        for(const index in advice.delusions) {
-            console.log('delusion', advice.delusions[index].name)
-        }
     }
 
     render() {
@@ -44,6 +40,9 @@ export default class AdviceScrollView extends Component {
         <View style={styles.container}>
             {this.state.item && <ModalView type={'advice'} item={this.state.item} />}
 
+            <View style={styles.header}>
+                <Text style={styles.headerText}>Overcoming</Text>
+            </View>
             <FlatList
                 style={styles.options}
                 data={advice.delusions}
@@ -58,8 +57,16 @@ export default class AdviceScrollView extends Component {
     }
 }
 
-
 const styles = StyleSheet.create({
+    header: {
+        height: dim.height*scrollview.header.viewHeightFactor,
+        backgroundColor: scrollview.header.bkgColor,
+    },
+    headerText: {
+        fontSize: scrollview.fontSize,
+        textAlign: 'center',
+        paddingTop: scrollview.header.padding,
+    },
     container: {
         position: 'absolute',
         bottom: 0,
@@ -67,15 +74,17 @@ const styles = StyleSheet.create({
         right: 0,
         paddingTop: 0,
         flex: 1,
-        backgroundColor: 'rgba(247,247,247,1.0)',
-        height: dim.height*.4,
+        backgroundColor: scrollview.bkgColor,
+        height: dim.height*scrollview.viewHeightFactor,
     },
     options: {
-        padding: 10,
+        padding: 0,
     },
     option: {
+        color: scrollview.textColor,
         textAlign: 'center',
         fontSize: 20,
         padding: 10,
+        height: scrollview.optionHeight,
     }
 })

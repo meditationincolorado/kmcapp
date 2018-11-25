@@ -6,7 +6,8 @@ import {
     Text ,
     TouchableHighlight,
     Dimensions} 
-from 'react-native';
+from 'react-native'
+import {scrollview, mainColor} from '../../assets/css/constants'
 
 let dim = Dimensions.get('screen')
 
@@ -32,9 +33,12 @@ export default class MainScrollView extends Component {
     render() {
       return (
         <View style={styles.container}>
+            <View style={styles.header}>
+                <Text style={styles.headerText}>KMC Colorado</Text>
+            </View>
             <FlatList
                 style={styles.options}
-                data={[{key: 'Upcoming Classes'}, {key: 'Guided Meditations'}, {key: 'Dharma (Good Advice)'}]}
+                data={[{key: 'Classes'}, {key: 'Meditations'}, {key: 'Good Advice'}]}
                 renderItem={({item}) => 
                     <TouchableHighlight onPress={() => { this.openFeature(item)}}>
                         <Text style={styles.option}>{item.key}</Text>
@@ -46,23 +50,33 @@ export default class MainScrollView extends Component {
     }
 }
 
-
 const styles = StyleSheet.create({
+    header: {
+        height: dim.height*scrollview.header.viewHeightFactor,
+        backgroundColor: scrollview.header.bkgColor,
+    },
+    headerText: {
+        fontSize: scrollview.fontSize,
+        textAlign: 'center',
+        paddingTop: scrollview.header.padding,
+    },
     container: {
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            paddingTop: 0,
-            flex: 1,
-            backgroundColor: 'transparent',
-            height: dim.height*.4,
-        },
-        options: {
-        },
-        option: {
-            textAlign: 'center',
-            fontSize: 20,
-            padding: 20,
-        }
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        paddingTop: 0,
+        flex: 1,
+        backgroundColor: scrollview.bkgColor,
+        height: dim.height*scrollview.viewHeightFactor,
+    },
+    options: {
+    },
+    option: {
+        textAlign: 'center',
+        color: '#ffffff',
+        fontSize: 20,
+        padding: 20,
+        height: scrollview.optionHeight,
+    }
 })
