@@ -27,33 +27,32 @@ export default class AdviceScrollView extends Component {
     
     showAdviceInfo(item) {
         this.setState({ item: item})
-        setTimeout(()=> {
-            console.log('showAdviceInfo--', this.state.item)
-        }, 300)
     }
 
     componentDidMount() {
     }
 
     render() {
-      return (
-        <View style={styles.container}>
-            {this.state.item && <ModalView type={'advice'} item={this.state.item} />}
+        const advice = this.props.apiResult
 
-            <View style={styles.header}>
-                <Text style={styles.headerText}>Overcoming</Text>
+        return (
+            <View style={styles.container}>
+                {this.state.item && <ModalView type={'advice'} item={this.state.item} />}
+
+                <View style={styles.header}>
+                    <Text style={styles.headerText}>Overcoming</Text>
+                </View>
+                <FlatList
+                    style={styles.options}
+                    data={advice.delusions}
+                    renderItem={({item}) =>
+                        <TouchableHighlight onPress={() => this.showAdviceInfo(item)}> 
+                            <Text style={styles.option}>{item.key}</Text>
+                        </TouchableHighlight>
+                    }
+                />
             </View>
-            <FlatList
-                style={styles.options}
-                data={advice.delusions}
-                renderItem={({item}) =>
-                    <TouchableHighlight onPress={() => this.showAdviceInfo(item)}> 
-                        <Text style={styles.option}>{item.key}</Text>
-                    </TouchableHighlight>
-                }
-             />
-        </View>
-      );
+        );
     }
 }
 

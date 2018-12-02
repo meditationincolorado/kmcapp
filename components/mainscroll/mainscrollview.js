@@ -34,7 +34,7 @@ export default class MainScrollView extends Component {
       return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <Text style={styles.headerText}>KMC Colorado</Text>
+                <Text style={styles.headerText}>KMC Colorado!</Text>
             </View>
             <FlatList
                 style={styles.options}

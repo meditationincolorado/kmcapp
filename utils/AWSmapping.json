@@ -1,0 +1,50 @@
+{
+    "Default": {
+        "mobile-app-credentials": {
+
+        },
+        "nkt-mobile-app-content": {
+            "adviceJSON": "good_advice.json",
+            "meditationsJSON": "english_meditations.json"
+        }
+    },
+    "Africa": {
+
+    },
+    "Asia": {
+        
+    },
+    "Australia": {
+
+    },
+    "Europe": {
+        "Austria": {
+
+        },
+        "Belgium": {
+
+        },
+        "Croatia": {
+
+        },
+        "Denmark": {
+
+        },
+        "England": {
+            
+        }
+    },
+    "United States": {
+        "Colorado": {
+            "Denver": {
+                "mobile-app-credentials": {
+
+                },
+                "nkt-mobile-app-content": {
+                    "adviceJSON": "good_advice.json",
+                    "meditationsJSON": "english_meditations.json"
+                }
+            }
+        }
+    }
+}

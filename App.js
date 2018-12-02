@@ -1,24 +1,23 @@
 import React, {Component} from 'react';
-import {
-  Alert,
-  Platform, 
-  StyleSheet, 
-  Text, 
-  View, 
-  Image, 
-  ImageBackground, 
-  TouchableHighlight,
-  Linking,
-  Dimensions,
-  Button
-} from 'react-native';
+import { Alert, Platform, StyleSheet, Text, View, Image, ImageBackground, TouchableHighlight, Linking, Dimensions, Button } from 'react-native';
 import MainScrollView from './components/mainscroll/mainscrollview'
 import CalendarScrollView from './components/calendar/calendarscrollview'
 import MediationsScrollView from './components/meditations/meditationsscrollview'
 import AdviceScrollView from './components/advice/advicescrollview'
-import content from './content.json'
-import {button, mainColor} from './assets/css/constants'
-import { getMoviesFromApiAsync } from './utils/adviceapi'
+import { getAdvice, getMeditations } from './utils/AWSapi'
+import { getClasses } from './utils/googleCalAPI'
+
+/* AWS */
+import { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY } from 'react-native-dotenv'
+const AWS = require('aws-sdk')
+AWS.config.update({
+    region: 'us-east-1',
+    accessKeyId: AWS_ACCESS_KEY_ID,
+    secretAccessKey: AWS_SECRET_ACCESS_KEY,
+})
+const s3 = new AWS.S3({
+    apiVersion: '2006-03-01',
+})
 
 let dim = Dimensions.get('screen')
 
@@ -34,7 +33,7 @@ export default class App extends Component{
       isLoading: true,
       classesResult: null,
       dharmaResult: null,
-      recordingsResult: null,
+      meditationsResult: null,
     };
 
     this.handleMenuSelection = this.handleMenuSelection.bind(this);
@@ -48,53 +47,18 @@ export default class App extends Component{
     this.setState({ activeView: feature })
   }
 
-  fetchRecordings() {
-    const url = 'https://raw.githubusercontent.com/meditationincolorado/kmcapp/master/components/meditations/meditations.json'
-    
-    return fetch(url)
-      .then((response) => response.json())
-      .then((responseJson) => {
+  componentWillMount() {
+    getClasses(this)
+    getMeditations(this)
+    getAdvice(this)
 
-        this.setState({
-          isLoading: false,
-          recordingsResult: responseJson,
-        }, function(){
-          setTimeout(()=> {
-            console.log('state', this.state.dataSource)
-          }, 1000)
-        });
-
-      })
-      .catch((error) =>{
-        console.error(error);
-      });
-  }
-
-  fetchAdvice() {
-    const url = 'https://raw.githubusercontent.com/meditationincolorado/kmcapp/master/components/advice/advice.json'
-    
-    return fetch(url)
-      .then((response) => response.json())
-      .then((responseJson) => {
-
-        this.setState({
-          isLoading: false,
-          recordingsResult: responseJson,
-        }, function(){
-          setTimeout(()=> {
-            console.log('state', this.state.dataSource)
-          }, 1000)
-        });
-
-      })
-      .catch((error) =>{
-        console.error(error);
-      });
+    setTimeout(()=> {
+      console.log('state', this.state)
+    }, 3000)
   }
 
   componentDidMount() {
-    this.fetchRecordings()
-
+    
     navigator.geolocation.getCurrentPosition(
       (position) => {
         this.setState({
@@ -103,10 +67,6 @@ export default class App extends Component{
           error: null,
           activeView: 'Main',
         });
-
-        setTimeout(()=> {
-          console.log('state',)
-        }, 1000)
       },
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
@@ -132,28 +92,9 @@ export default class App extends Component{
         </View> : null }
 
         {this.state.activeView === 'Classes' ? <CalendarScrollView  /> : null}
-        {this.state.activeView === 'Meditations' ? <MediationsScrollView apiResult={this.state.recordingsResult} /> : null}
-        {this.state.activeView === 'Good Advice' ? <AdviceScrollView /> : null}
-        
-        {this.state.activeView === 'Main' ? 
-          <MainScrollView onClick={this.handleMenuSelection.bind()}/> : 
-          null
-        }
-
-        {/*<CalendarScrollView style={styles.calendar}/>*/}
-
-        {/*<NKT>
-          <Text style={styles.welcome}>{content.welcome.text} is a member of !</Text>
-
-          <TouchableHighlight onPress={this.goToNKTWebsite.bind()}>
-            <Image 
-              style={styles.nktlogo} 
-              resizeMode="cover"
-              source={require('./assets/images/nkt_logo_white.png')} 
-            />
-          </TouchableHighlight>
-        </NKT> */
-        }
+        {this.state.activeView === 'Meditations' ? <MediationsScrollView apiResult={this.state.meditationsResult} /> : null}
+        {this.state.activeView === 'Good Advice' ? <AdviceScrollView apiResult={this.state.dharmaResult} /> : null}
+        {this.state.activeView === 'Main' ? <MainScrollView onClick={this.handleMenuSelection.bind()}/> : null}
 
       </ImageBackground>
     );

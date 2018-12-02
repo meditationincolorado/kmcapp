@@ -26,23 +26,15 @@ export default class MeditationsScrollView extends Component {
     
     showMeditationInfo(item) {
         this.setState({ item: item})
-        setTimeout(()=> {
-            console.log('show meditation--',item)
-        }, 300)
     }
 
     componentDidMount() {
         const temp = this.props.apiResult
-        console.log('Meditations did mount', temp)
-
-        for(const index in temp.recordings) {
-            console.log('meditation', temp.recordings[index])
-        }
     }
 
     render() {
         const meditations = this.props.apiResult
-
+        
         return (
             <View style={styles.container}>
                 {this.state.item &&  <ModalView type={'meditation'} item={this.state.item}/> }
