@@ -6,6 +6,7 @@ import MediationsScrollView from './components/meditations/meditationsscrollview
 import AdviceScrollView from './components/advice/advicescrollview'
 import { getAdvice, getMeditations } from './utils/AWSapi'
 import { getClasses } from './utils/googleCalAPI'
+// import { getUserLocation } from './utils/geolocationAPI'
 
 /* AWS */
 import { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY } from 'react-native-dotenv'
@@ -60,7 +61,7 @@ export default class App extends Component{
         Promise.all([
             getClasses(),
             getMeditations(),
-            getAdvice()
+            getAdvice(),
         ]).then(function ([classes, meditations, advice]){
             setStateProxy(classes, meditations, advice)
         }).catch((error) => {
@@ -69,7 +70,6 @@ export default class App extends Component{
     }
 
     componentDidMount() {
-        
         navigator.geolocation.getCurrentPosition(
         (position) => {
             this.setState({
@@ -107,7 +107,7 @@ export default class App extends Component{
                 {loaded && this.state.activeView === 'Classes' ? <CalendarScrollView  apiResult={this.state.classesResult} /> : null}
                 {loaded && this.state.activeView === 'Meditations' ? <MediationsScrollView apiResult={this.state.meditationsResult} /> : null}
                 {loaded && this.state.activeView === 'Good Advice' ? <AdviceScrollView apiResult={this.state.dharmaResult} /> : null}
-                {loaded && this.state.activeView === 'Main' ? <MainScrollView onClick={this.handleMenuSelection.bind()}/> : null}
+                {loaded && this.state.activeView === 'Main' ? <MainScrollView onClick={this.handleMenuSelection.bind()} /> : null}
 
             </ImageBackground>
         );

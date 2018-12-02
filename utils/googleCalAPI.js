@@ -1,5 +1,5 @@
 module.exports = {
-    getClasses: async (appContext) => {
+    getClasses: async () => {
         // const key = `google-calendar-api/${country}/${region}/${city}/token.json`
         const url = 'https://nkt-mobile-api.herokuapp.com/calendar'
 

@@ -19,9 +19,9 @@ export default class ModalView extends Component {
             return(
                 <View style={styles.container}>
                     <Text style={styles.title}>{item.title}</Text>
-                    <Text style={styles.time}>from {item.time}</Text>
+                    <Text style={styles.date}>{item.day} {item.start} - {item.end}</Text>
                     <Text style={styles.description}>{item.description}</Text>
-                    <Text style={styles.address}>{item.address}</Text>
+                    <Text style={styles.address}>{item.location}</Text>
                 </View>
             )
         } else if(this.props.type === 'advice') {
@@ -77,10 +77,12 @@ const styles = StyleSheet.create({
     title: {
         fontSize: modal.title.fontSize,
         margin: 10,
+        fontWeight: 'bold',
         color: mainColor,
     },
-    time: {
+    date: {
         fontSize: modal.description.fontSize,
+        fontWeight: 'bold',
         marginLeft: 10,
     },
     description: {

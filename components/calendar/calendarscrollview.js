@@ -5,7 +5,9 @@ import {
     StyleSheet,
     Text ,
     TouchableHighlight,
-    Dimensions} 
+    Dimensions,
+    Linking
+} 
 from 'react-native';
 import ModalView from '../modal/modalview'
 import {mainColor, scrollview} from '../../assets/css/constants'
@@ -28,81 +30,125 @@ export default class CalendarScrollView extends Component {
       };
 
       this.showClassInfo = this.showClassInfo.bind(this);
+      this.noCalendarAvailable = this.noCalendarAvailable.bind(this);
     }
     
     showClassInfo(item) {
+        console.log('item', item, item.day, item.title)
         this.setState({ item: item, selectedClass: `${item.day} - ${item.title}` })
     }
 
     renderClassesTableClass(item) {
         return (
-            !item.error ? 
-                <View style={this.state.selectedClass === false ?  styles.selectedItem : styles.item}>
-                    <Text style={styles.option}>{item.day}</Text>
-                    <Text style={styles.option}>
-                        {item.title}
-                    </Text>
-                </View>
-                :
-                <View style={this.state.selectedClass === false ?  styles.selectedItem : styles.item}>
-                    <Text style={styles.option}>{item.day}</Text>
-                    <Text style={styles.option}>
-                        {item.error}
-                    </Text>
-                </View>
+            <View style={this.state.selectedClass === false ?  styles.selectedItem : styles.item}>
+                <Text style={styles.classTitle}>{item.title}</Text>
+                <Text style={styles.classInfo}>{item.start} - {item.end}</Text>
+                <Text style={styles.classInfo}>{item.location}</Text>
+            </View>
         )
     }
 
     configureAPIresult() {
-        const temp = []
+        const classes = [],
+            classDays = [],
+            daysArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+            intToDayConversion = (num) => {
+                return daysArray[num]
+            },
+            timeConversion = (date) => {
+                const hour = date.getHours(),
+                    minutes = date.getMinutes(),
+                    temp = {
+                        hour: hour < 13 ? hour : hour % 12,
+                        minutes: `${minutes < 10 ? 0 : ''}${minutes}`,
+                        ampm: hour < 12 ? 'am': 'pm', 
+                    }
+                return temp
+            },
+            renderArray = () => {
+                let dataArray = []
+                for(i in classDays) {
+                    temp = { day: classDays[i], data: [] }
+                    dataArray.push(temp)
+                }
+
+                for(i in classes) {
+                    const classObj = classes[i],
+                        correct_index = classDays.indexOf(classObj.day)
+                        
+                    dataArray[correct_index].data.push(classObj.data)
+                }
+                return dataArray
+            }
+
         for (i in this.props.apiResult) {
             const result = this.props.apiResult[i],
+                startDatetime = new Date(result.start.dateTime),
+                startDay = intToDayConversion(startDatetime.getDay()),
+                startTime = timeConversion(startDatetime),
+                endDatetime = new Date(result.end.dateTime),
+                endTime = timeConversion(endDatetime),
                 classObj = {
-                    day: 'Monday',
-                    data: [
+                    day: startDay,
+                    data:
                         {
                             'title': result.summary,
-                            'day': 'Monday',
-                            'time': '7:00pm - 8:00pm',
-                            'location': 'Cap Hill',
-                            'description': 'Each class is self contained and will include a teaching and guided meditation. Everyone welcome! $12, Students/Seniors/Military $9 (free for Members) with Resident Teacher, Kadam Lucy James. More info and class topics: https://meditationincolorado.org/tuesdays',
-                            'address': '1081 Marion Street, Denver, CO 80218',
+                            'day': startDay,
+                            'start': `${startTime.hour}:${startTime.minutes} ${startTime.ampm}`,
+                            'end': `${endTime.hour}:${endTime.minutes} ${endTime.ampm}`,
+                            'location': result.location,
+                            'description': result.description,
                         }
-                    ]
                 }
-                
-            temp.push(classObj)
-        }
 
-        return temp
-        console.log('classes', this.props.apiResult, temp)
+            classes.push(classObj)
+
+            if(!classDays.includes(startDay)) classDays.push(startDay)
+        }
+    
+        return renderArray()
+    }
+
+    noCalendarAvailable() {
+        Linking.openURL('https://kadampa.org/map')
     }
 
     componentWillMount() {
-        this.configureAPIresult()
         this.setState({
             classes: this.configureAPIresult()
         })
     }
 
     render() {
-        return (
-            <View style={styles.container}>
-                {this.state.selectedClass &&  <ModalView type={'class'} item={this.state.item}/> }
-                
-                <SectionList
-                    sections={this.state.classes}
-                    renderItem={
-                        ({item}) => 
-                            <TouchableHighlight onPress={() => this.showClassInfo(item)}>
-                                {this.renderClassesTableClass(item)}
-                            </TouchableHighlight>
-                    }
-                    renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.day}</Text>}
-                    keyExtractor={(item, index) => index}
-                />
-            </View>
-        );
+        const calendarAvailable = this.state.classes.length ? true : false
+
+        if(calendarAvailable) {
+            return (
+                <View style={styles.container}>
+                    {this.state.selectedClass &&  <ModalView type={'class'} item={this.state.item}/> }
+                    
+                    <SectionList
+                        sections={this.state.classes}
+                        renderItem={
+                            ({item}) => 
+                                <TouchableHighlight onPress={() => this.showClassInfo(item)}>
+                                    {this.renderClassesTableClass(item)}
+                                </TouchableHighlight>
+                        }
+                        renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.day}</Text>}
+                        keyExtractor={(item, index) => index}
+                    />
+                </View>
+            );
+        } else {
+            return (
+                <View style={styles.container}>
+                    <TouchableHighlight onPress={this.noCalendarAvailable.bind()}>
+                        <Text style={styles.no}>There is no calendar available via the app in your area. However, you may be able to find classes near you by click HERE.</Text>
+                    </TouchableHighlight>
+                </View>
+            )
+        }
     }
 }
 
@@ -146,78 +192,20 @@ const styles = StyleSheet.create({
     options: {
         padding: 0,
     },
+    classTitle: {
+        paddingBottom:0,
+        fontSize: 15,
+        color:'#ffffff',
+        fontWeight: 'bold',
+    },
+    classInfo: {
+        paddingBottom:0,
+        fontSize: 15,
+        color:'#ffffff'
+    },
     option: {
         color: scrollview.textColor,
         fontSize: 15,
         height: scrollview.optionHeight,
     }
 })
-
-const testData = [
-    {
-        day: 'Monday', 
-        data: [
-            {
-                'title': 'Meditation 1',
-                'day': 'Monday',
-                'time': '7:00pm - 8:00pm',
-                'location': 'Cap Hill',
-                'description': 'Each class is self contained and will include a teaching and guided meditation. Everyone welcome! $12, Students/Seniors/Military $9 (free for Members) with Resident Teacher, Kadam Lucy James. More info and class topics: https://meditationincolorado.org/tuesdays',
-                'address': '1081 Marion Street, Denver, CO 80218',
-            },
-            {
-                'title': 'Meditation 2',
-                'day': 'Monday',
-                'time': '7:00pm - 8:30pm',
-                'location': 'Boulder',
-                'description': 'Lorem ipsum...',
-                'address': 'Marion Street',
-            }
-        ]
-    },
-    {
-        day: 'Tuesday', 
-        data: [
-            {
-                'title': 'Meditation 3',
-                'day': 'Tuesday',
-                'time': '7:00pm - 8:00pm',
-                'location': 'Cap Hill',
-                'description': 'Lorem ipsum...',
-                'address': 'Marion Street',
-                'address': 'Marion Street',
-            },
-            {
-
-                'title': 'Meditation 4',
-                'day': 'Tuesday',
-                'time': '7:00pm - 8:30pm',
-                'location': 'Boulder',
-                'description': 'Lorem ipsum...',
-                'address': 'Marion Street',
-            }
-        ]
-    },
-    {
-        day: 'Wednesday', 
-        data: [
-            {
-                'title': 'Meditation 5',
-                'day': 'Wednesday',
-                'time': '7:00pm - 8:00pm',
-                'location': 'Cap Hill',
-                'description': 'Lorem ipsum...',
-                'address': 'Marion Street',
-            },
-            {
-
-                'title': 'Meditation 6',
-                'day': 'Wednesday',
-                'time': '7:00pm - 8:30pm',
-                'location': 'Boulder',
-                'description': 'Lorem ipsum...',
-                'address': 'Marion Street',
-            }
-        ]
-    },
-]
