@@ -6,10 +6,10 @@ module.exports = {
         return fetch(url)
             .then((response) => response.json())
             .then((responseJson) => {
-                appContext.setState({ classesResult: responseJson })
+                return responseJson
             })
             .catch((error) => {
-                appContext.setState({ classesResult: error })
+                return { 'error': 'no classes returned'}
             });
     }
 }

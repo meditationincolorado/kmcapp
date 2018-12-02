@@ -17,10 +17,14 @@ export default class CalendarScrollView extends Component {
       super(props);
   
       this.state = {
-        selectedClass: null,
-        item: {
-            title: 'test'
-        }
+            classes: [{
+                day: 'No classes', 
+                data: [{ 'error': 'In your area at this time :(' }]
+            }],
+            selectedClass: null,
+            item: {
+                title: 'test'
+            }
       };
 
       this.showClassInfo = this.showClassInfo.bind(this);
@@ -30,30 +34,75 @@ export default class CalendarScrollView extends Component {
         this.setState({ item: item, selectedClass: `${item.day} - ${item.title}` })
     }
 
-    componentDidMount() {}
+    renderClassesTableClass(item) {
+        return (
+            !item.error ? 
+                <View style={this.state.selectedClass === false ?  styles.selectedItem : styles.item}>
+                    <Text style={styles.option}>{item.day}</Text>
+                    <Text style={styles.option}>
+                        {item.title}
+                    </Text>
+                </View>
+                :
+                <View style={this.state.selectedClass === false ?  styles.selectedItem : styles.item}>
+                    <Text style={styles.option}>{item.day}</Text>
+                    <Text style={styles.option}>
+                        {item.error}
+                    </Text>
+                </View>
+        )
+    }
+
+    configureAPIresult() {
+        const temp = []
+        for (i in this.props.apiResult) {
+            const result = this.props.apiResult[i],
+                classObj = {
+                    day: 'Monday',
+                    data: [
+                        {
+                            'title': result.summary,
+                            'day': 'Monday',
+                            'time': '7:00pm - 8:00pm',
+                            'location': 'Cap Hill',
+                            'description': 'Each class is self contained and will include a teaching and guided meditation. Everyone welcome! $12, Students/Seniors/Military $9 (free for Members) with Resident Teacher, Kadam Lucy James. More info and class topics: https://meditationincolorado.org/tuesdays',
+                            'address': '1081 Marion Street, Denver, CO 80218',
+                        }
+                    ]
+                }
+                
+            temp.push(classObj)
+        }
+
+        return temp
+        console.log('classes', this.props.apiResult, temp)
+    }
+
+    componentWillMount() {
+        this.configureAPIresult()
+        this.setState({
+            classes: this.configureAPIresult()
+        })
+    }
 
     render() {
-      return (
-        <View style={styles.container}>
-            {this.state.selectedClass &&  <ModalView type={'class'} item={this.state.item}/> }
-            <SectionList
-                sections={testData}
-                renderItem={
-                    ({item}) => 
-                        <TouchableHighlight onPress={() => this.showClassInfo(item)}>
-                            <View style={this.state.selectedClass === `${item.day} - ${item.title}` ?  styles.selectedItem : styles.item}>
-                                <Text style={styles.option}>{item.title}</Text>
-                                <Text style={styles.option}>
-                                    {item.location} @ {item.time}
-                                </Text>
-                            </View>
-                        </TouchableHighlight>
-                }
-                renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.day}</Text>}
-                keyExtractor={(item, index) => index}
-            />
-        </View>
-      );
+        return (
+            <View style={styles.container}>
+                {this.state.selectedClass &&  <ModalView type={'class'} item={this.state.item}/> }
+                
+                <SectionList
+                    sections={this.state.classes}
+                    renderItem={
+                        ({item}) => 
+                            <TouchableHighlight onPress={() => this.showClassInfo(item)}>
+                                {this.renderClassesTableClass(item)}
+                            </TouchableHighlight>
+                    }
+                    renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.day}</Text>}
+                    keyExtractor={(item, index) => index}
+                />
+            </View>
+        );
     }
 }
 

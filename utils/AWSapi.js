@@ -3,10 +3,10 @@ import awsMapping from './AWSmapping.json'
 
 
 /* Leverage JSON file */
-const meditationsKey = (appContext) => {
+const meditationsKey = () => {
     return 'meditations/'.concat(awsMapping.Default['nkt-mobile-app-content'].meditationsJSON)
 }, 
-adviceKey = (appContext) => {
+adviceKey = () => {
     return 'advice/'.concat(awsMapping.Default['nkt-mobile-app-content'].adviceJSON)
 },
 AWS_BUCKET = 'nkt-mobile-app-content'
@@ -23,34 +23,26 @@ const s3 = new AWS.S3({
 })
 
 module.exports = {
-    getMeditations: async (appContext) => {
-        const update = (objectData) => {
-            appContext.setState({ meditationsResult: objectData })
-        },
-        obj = {
+    getMeditations: async () => {
+        const obj = {
             'Bucket': AWS_BUCKET,
-            'Key': meditationsKey(appContext)
+            'Key': meditationsKey()
         }
         
-        s3.getObject(obj, (err, data) => {
-            if (err) return err;
-            let objectData = JSON.parse(data.Body.toString('utf-8')); // Use the encoding necessary
-            update(objectData)
+        return s3.getObject(obj, (err, data) => {
+            if (err) return err
+            return data
         });
     },
-    getAdvice: async (appContext) => {
-        const update = (objectData) => {
-            appContext.setState({ dharmaResult: objectData })
-        },
-        obj = {
+    getAdvice: async () => {
+        const obj = {
             'Bucket': AWS_BUCKET,
-            'Key': adviceKey(appContext)
+            'Key': adviceKey()
         }
         
-        s3.getObject(obj, (err, data) => {
-            if (err) return err;
-            let objectData = JSON.parse(data.Body.toString('utf-8')); // Use the encoding necessary
-            update(objectData)
+        return s3.getObject(obj, (err, data) => {
+            if (err) return err
+            return data
         });
     }
 }
