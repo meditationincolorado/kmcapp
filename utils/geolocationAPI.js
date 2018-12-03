@@ -21,13 +21,6 @@ module.exports = {
                 );
         }
 
-        // Promise.all([
-        //     find()
-        // ]).then(function ([location]){
-        //     console.log('location test', location)
-        // }).catch((error) => {
-        // })
-
         find()
             .then((data) => {
                 console.log('done', data)

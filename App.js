@@ -6,7 +6,7 @@ import MediationsScrollView from './components/meditations/meditationsscrollview
 import AdviceScrollView from './components/advice/advicescrollview'
 import { getAdvice, getMeditations } from './utils/AWSapi'
 import { getClasses } from './utils/googleCalAPI'
-// import { getUserLocation } from './utils/geolocationAPI'
+import { GOOGLE_MAPS_API_KEY } from 'react-native-dotenv'
 
 /* AWS */
 import { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY } from 'react-native-dotenv'
@@ -20,6 +20,7 @@ const s3 = new AWS.S3({
     apiVersion: '2006-03-01',
 })
 
+/* Screen Dimensions */
 let dim = Dimensions.get('screen')
 
 export default class App extends Component{
@@ -35,6 +36,8 @@ export default class App extends Component{
       classesResult: null,
       dharmaResult: null,
       meditationsResult: null,
+      regionObj: null,
+      countryObj: null,
     };
 
     this.handleMenuSelection = this.handleMenuSelection.bind(this);
@@ -72,16 +75,36 @@ export default class App extends Component{
     componentDidMount() {
         navigator.geolocation.getCurrentPosition(
         (position) => {
-            this.setState({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-            error: null,
-            activeView: 'Main',
-            });
+            const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=${GOOGLE_MAPS_API_KEY}`
+
+            fetch(url)
+                .then((response) => response.json())
+                .then((responseJson) => {
+                    const results_ct = responseJson.results.length,
+                        region = responseJson.results[results_ct - 2].address_components[0],
+                        country = responseJson.results[results_ct - 2].address_components[1]
+
+                this.setState({
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude,
+                    error: null,
+                    regionObj: region,
+                    countryObj: country,
+                    activeView: 'Main',
+                });
+                })
+                .catch((error) => {
+                    return { 'error': 'no classes returned'}
+                });
+
+            console.log(position)
+            console.log(`coords ${position.coords.latitude},${position.coords.longitude}`)
         },
         (error) => this.setState({ error: error.message }),
         { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
         );
+
+        setTimeout(() => { console.log('state', this.state) }, 3000)
     }
 
     goHome() {
