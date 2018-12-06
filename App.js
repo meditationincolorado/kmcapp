@@ -5,7 +5,7 @@ import CalendarScrollView from './components/calendar/calendarscrollview'
 import MediationsScrollView from './components/meditations/meditationsscrollview'
 import AdviceScrollView from './components/advice/advicescrollview'
 import { getAdvice, getMeditations } from './utils/AWSapi'
-import { getClasses } from './utils/googleCalAPI'
+import { getClassesLocally, getClasses } from './utils/googleCalAPI'
 import { GOOGLE_MAPS_API_KEY } from 'react-native-dotenv'
 
 /* AWS */
@@ -36,7 +36,8 @@ export default class App extends Component{
       classesResult: null,
       dharmaResult: null,
       meditationsResult: null,
-      regionObj: null,
+      cityObj: null,
+      stateObj: null,
       countryObj: null,
     };
 
@@ -51,7 +52,8 @@ export default class App extends Component{
         this.setState({ activeView: feature })
     }
 
-    componentWillMount() {
+    // componentWillMount() {
+    retrieveContent() {
         const setStateProxy = (classes, meditations, advice) => {
             this.setState({
                 classesResult: classes,
@@ -62,10 +64,11 @@ export default class App extends Component{
         }
 
         Promise.all([
-            getClasses(),
+            getClassesLocally(this.state),
+            getClasses(this.state),
             getMeditations(),
             getAdvice(),
-        ]).then(function ([classes, meditations, advice]){
+        ]).then(function ([classesAlt, classes, meditations, advice]){
             setStateProxy(classes, meditations, advice)
         }).catch((error) => {
             console.error(error)
@@ -80,31 +83,33 @@ export default class App extends Component{
             fetch(url)
                 .then((response) => response.json())
                 .then((responseJson) => {
+                    // console.log('responseJson', responseJson)
                     const results_ct = responseJson.results.length,
-                        region = responseJson.results[results_ct - 2].address_components[0],
-                        country = responseJson.results[results_ct - 2].address_components[1]
+                        number = responseJson.results[0].address_components[0],
+                        street = responseJson.results[0].address_components[1],
+                        city = responseJson.results[0].address_components[2],
+                        county = responseJson.results[0].address_components[3],
+                        state = responseJson.results[0].address_components[4],
+                        country = responseJson.results[0].address_components[5],
+                        zipcode = responseJson.results[0].address_components[6]
 
-                this.setState({
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude,
-                    error: null,
-                    regionObj: region,
-                    countryObj: country,
-                    activeView: 'Main',
-                });
+                    this.setState({
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude,
+                        error: null,
+                        cityObj: city,
+                        stateObj: state,
+                        countryObj: country,
+                        activeView: 'Main',
+                    }, ()=> { this.retrieveContent() });
                 })
                 .catch((error) => {
                     return { 'error': 'no classes returned'}
                 });
-
-            console.log(position)
-            console.log(`coords ${position.coords.latitude},${position.coords.longitude}`)
         },
         (error) => this.setState({ error: error.message }),
         { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
         );
-
-        setTimeout(() => { console.log('state', this.state) }, 3000)
     }
 
     goHome() {
