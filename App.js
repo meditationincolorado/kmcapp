@@ -7,11 +7,10 @@ import AdviceScrollView from './components/advice/advicescrollview'
 import { getCredentials, getAdvice, getMeditations } from './utils/AWSapi'
 import { getClasses } from './utils/googleCalAPI'
 import { getUserLocation } from './utils/geolocationAPI'
-import { GOOGLE_MAPS_API_KEY } from 'react-native-dotenv'
 
 /* AWS */
 import { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY } from 'react-native-dotenv'
-import { FileSystemCredentials } from 'aws-sdk';
+
 const AWS = require('aws-sdk')
 AWS.config.update({
     region: 'us-east-1',
@@ -55,13 +54,13 @@ export default class App extends Component{
         this.setState({ activeView: feature })
     }
 
-    // componentWillMount() {
     retrieveContent(creds) {
         const setStateProxy = (classes, meditations, advice) => {
             this.setState({
                 classesResult: classes,
                 meditationsResult: JSON.parse(meditations.response.data.Body.toString('utf-8')),
                 dharmaResult: JSON.parse(advice.response.data.Body.toString('utf-8')),
+                awsCredsResponse: creds,
                 isLoading: false
             })
         }

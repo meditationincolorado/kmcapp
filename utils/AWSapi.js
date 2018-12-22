@@ -1,8 +1,6 @@
 import { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY } from 'react-native-dotenv'
 import awsMapping from './AWSmapping.json'
 
-let AWS_CREDS = null
-
 /* Leverage JSON file */
 const meditationsKey = () => {
     return 'meditations/'.concat(awsMapping.Default['nkt-mobile-app-content'].meditationsJSON)
@@ -11,8 +9,11 @@ adviceKey = () => {
     return 'advice/'.concat(awsMapping.Default['nkt-mobile-app-content'].adviceJSON)
 },
 credentialsKey = (locationInfo) => {
-    const { country, city, state } = locationInfo
-    return `google-calendar-api/${country}/colorado/denver/credentials.json`
+    let { country, state, city } = locationInfo
+    state = 'colorado'
+    city = 'denver'
+
+    return `google-calendar-api/${country}/${state}/${city}/credentials.json`
 },
 AWS_CONTENT_BUCKET = 'nkt-mobile-app-content'
 AWS_CREDENTIALS_BUCKET = 'mobile-app-credentials'

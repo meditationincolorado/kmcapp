@@ -29,27 +29,27 @@ addDays = (date, days) => {
     var result = new Date(date);
     result.setDate(result.getDate() + days);
     return result;
-},
-now = new Date(),
-later = addDays(now, 4),
-offset = createOffset(now),
-time = `00:00:00${offset}`,
-today = convertDateForURLParam(now) + 'T' + time
-
-const apiString = 'https://www.googleapis.com/calendar/v3/calendars/',
-  apiKeyParam = `?key=${GOOGLE_CAL_API_KEY_COLORADO}`,
-  getEvents = '/events',
-  singleEvents = '&singleEvents=true',
-  orderBy = '&orderBy=startTime',
-  timeMin = '&timeMin='.concat(today),
-  laterFromToday = convertDateForURLParam(later) + 'T' + time,
-  timeMax = '&timeMax='.concat(laterFromToday)
-
-const classesURI = `${apiString}${'media@meditationincolorado.org'}${getEvents}${apiKeyParam}${singleEvents}${orderBy}${timeMin}${timeMax}`
+}
 
 module.exports = {
-    getClasses: async (awsCredsResponse) => {
-        console.log('getClass:', awsCredsResponse, classesURI)
+    getClasses: async (creds) => {
+        const { key, window_in_days } = creds
+
+        const now = new Date(),
+            later = addDays(now, parseInt(window_in_days)),
+            offset = createOffset(now),
+            time = `00:00:00${offset}`,
+            today = convertDateForURLParam(now) + 'T' + time,
+            apiString = 'https://www.googleapis.com/calendar/v3/calendars/',
+            apiKeyParam = `?key=${key}`, // was GOOGLE_CAL_API_KEY_COLORADO
+            getEvents = '/events',
+            singleEvents = '&singleEvents=true',
+            orderBy = '&orderBy=startTime',
+            timeMin = '&timeMin='.concat(today),
+            laterFromToday = convertDateForURLParam(later) + 'T' + time,
+            timeMax = '&timeMax='.concat(laterFromToday),
+            classesURI = `${apiString}${'media@meditationincolorado.org'}${getEvents}${apiKeyParam}${singleEvents}${orderBy}${timeMin}${timeMax}`
+
         return fetch(classesURI)
             .then((response) => response.json())
             .then((responseJson) => {
@@ -58,19 +58,5 @@ module.exports = {
             .catch((error) => {
                 return { 'error': 'no classes returned'}
             });
-    },
-    // getClasses: async (state) => {
-    //     // const key = `google-calendar-api/${country}/${region}/${city}/token.json`
-    //     const url = 'https://nkt-mobile-api.herokuapp.com/calendar'
-
-    //     return fetch(url)
-    //         .then((response) => response.json())
-    //         .then((responseJson) => {
-    //             console.log('getClasses: ', responseJson)
-    //             return responseJson
-    //         })
-    //         .catch((error) => {
-    //             return { 'error': 'no classes returned'}
-    //         });
-    // }
+    }
 }
