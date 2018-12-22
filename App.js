@@ -4,12 +4,14 @@ import MainScrollView from './components/mainscroll/mainscrollview'
 import CalendarScrollView from './components/calendar/calendarscrollview'
 import MediationsScrollView from './components/meditations/meditationsscrollview'
 import AdviceScrollView from './components/advice/advicescrollview'
-import { getAdvice, getMeditations } from './utils/AWSapi'
-import { getClassesLocally, getClasses } from './utils/googleCalAPI'
+import { getCredentials, getAdvice, getMeditations } from './utils/AWSapi'
+import { getClasses } from './utils/googleCalAPI'
+import { getUserLocation } from './utils/geolocationAPI'
 import { GOOGLE_MAPS_API_KEY } from 'react-native-dotenv'
 
 /* AWS */
 import { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY } from 'react-native-dotenv'
+import { FileSystemCredentials } from 'aws-sdk';
 const AWS = require('aws-sdk')
 AWS.config.update({
     region: 'us-east-1',
@@ -33,6 +35,7 @@ export default class App extends Component{
       error: null,
       activeView: 'Main',
       isLoading: true,
+      awsCredsResponse: null,
       classesResult: null,
       dharmaResult: null,
       meditationsResult: null,
@@ -53,7 +56,7 @@ export default class App extends Component{
     }
 
     // componentWillMount() {
-    retrieveContent() {
+    retrieveContent(creds) {
         const setStateProxy = (classes, meditations, advice) => {
             this.setState({
                 classesResult: classes,
@@ -64,11 +67,10 @@ export default class App extends Component{
         }
 
         Promise.all([
-            getClassesLocally(this.state),
-            getClasses(this.state),
+            getClasses(creds),
             getMeditations(),
             getAdvice(),
-        ]).then(function ([classesAlt, classes, meditations, advice]){
+        ]).then(function ([classes, meditations, advice]){
             setStateProxy(classes, meditations, advice)
         }).catch((error) => {
             console.error(error)
@@ -76,40 +78,12 @@ export default class App extends Component{
     }
 
     componentDidMount() {
-        navigator.geolocation.getCurrentPosition(
-        (position) => {
-            const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=${GOOGLE_MAPS_API_KEY}`
-
-            fetch(url)
-                .then((response) => response.json())
-                .then((responseJson) => {
-                    // console.log('responseJson', responseJson)
-                    const results_ct = responseJson.results.length,
-                        number = responseJson.results[0].address_components[0],
-                        street = responseJson.results[0].address_components[1],
-                        city = responseJson.results[0].address_components[2],
-                        county = responseJson.results[0].address_components[3],
-                        state = responseJson.results[0].address_components[4],
-                        country = responseJson.results[0].address_components[5],
-                        zipcode = responseJson.results[0].address_components[6]
-
-                    this.setState({
-                        latitude: position.coords.latitude,
-                        longitude: position.coords.longitude,
-                        error: null,
-                        cityObj: city,
-                        stateObj: state,
-                        countryObj: country,
-                        activeView: 'Main',
-                    }, ()=> { this.retrieveContent() });
-                })
-                .catch((error) => {
-                    return { 'error': 'no classes returned'}
-                });
-        },
-        (error) => this.setState({ error: error.message }),
-        { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
-        );
+        getUserLocation().then((locationInfo) => {
+            getCredentials(locationInfo).then((credentials) => {
+                const creds = JSON.parse(credentials.Body.toString())
+                this.retrieveContent(creds)
+            })
+        })
     }
 
     goHome() {

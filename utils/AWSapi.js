@@ -1,6 +1,7 @@
 import { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY } from 'react-native-dotenv'
 import awsMapping from './AWSmapping.json'
 
+let AWS_CREDS = null
 
 /* Leverage JSON file */
 const meditationsKey = () => {
@@ -9,7 +10,12 @@ const meditationsKey = () => {
 adviceKey = () => {
     return 'advice/'.concat(awsMapping.Default['nkt-mobile-app-content'].adviceJSON)
 },
-AWS_BUCKET = 'nkt-mobile-app-content'
+credentialsKey = (locationInfo) => {
+    const { country, city, state } = locationInfo
+    return `google-calendar-api/${country}/colorado/denver/credentials.json`
+},
+AWS_CONTENT_BUCKET = 'nkt-mobile-app-content'
+AWS_CREDENTIALS_BUCKET = 'mobile-app-credentials'
 
 /* AWS Connection */
 const AWS = require('aws-sdk')
@@ -25,7 +31,7 @@ const s3 = new AWS.S3({
 module.exports = {
     getMeditations: async () => {
         const obj = {
-            'Bucket': AWS_BUCKET,
+            'Bucket': AWS_CONTENT_BUCKET,
             'Key': meditationsKey()
         }
         
@@ -36,7 +42,7 @@ module.exports = {
     },
     getAdvice: async () => {
         const obj = {
-            'Bucket': AWS_BUCKET,
+            'Bucket': AWS_CONTENT_BUCKET,
             'Key': adviceKey()
         }
         
@@ -44,5 +50,17 @@ module.exports = {
             if (err) return err
             return data
         });
+    },
+    getCredentials: async (locationInfo) => {
+        const params = {
+            'Bucket': AWS_CREDENTIALS_BUCKET,
+            'Key': credentialsKey(locationInfo)
+        }
+        
+        return await s3.getObject(params, (err) => {
+            if (err) {
+                // console.log(err)
+            }
+        }).promise()
     }
 }

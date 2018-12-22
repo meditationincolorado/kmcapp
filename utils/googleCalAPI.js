@@ -31,7 +31,7 @@ addDays = (date, days) => {
     return result;
 },
 now = new Date(),
-week = addDays(now, 4),
+later = addDays(now, 4),
 offset = createOffset(now),
 time = `00:00:00${offset}`,
 today = convertDateForURLParam(now) + 'T' + time
@@ -42,37 +42,35 @@ const apiString = 'https://www.googleapis.com/calendar/v3/calendars/',
   singleEvents = '&singleEvents=true',
   orderBy = '&orderBy=startTime',
   timeMin = '&timeMin='.concat(today),
-  weekFromToday = convertDateForURLParam(week) + 'T' + time,
-  timeMax = '&timeMax='.concat(weekFromToday)
+  laterFromToday = convertDateForURLParam(later) + 'T' + time,
+  timeMax = '&timeMax='.concat(laterFromToday)
 
 const classesURI = `${apiString}${'media@meditationincolorado.org'}${getEvents}${apiKeyParam}${singleEvents}${orderBy}${timeMin}${timeMax}`
 
-console.log('classesURI', classesURI)
-
 module.exports = {
-    getClassesLocally: async (state) => {
-        fetch(classesURI)
+    getClasses: async (awsCredsResponse) => {
+        console.log('getClass:', awsCredsResponse, classesURI)
+        return fetch(classesURI)
             .then((response) => response.json())
             .then((responseJson) => {
-                console.log('testing: ', responseJson.items)
                 return responseJson.items
             })
             .catch((error) => {
                 return { 'error': 'no classes returned'}
             });
     },
-    getClasses: async (state) => {
-        console.log('state (getClasses)', state)
-        // const key = `google-calendar-api/${country}/${region}/${city}/token.json`
-        const url = 'https://nkt-mobile-api.herokuapp.com/calendar'
+    // getClasses: async (state) => {
+    //     // const key = `google-calendar-api/${country}/${region}/${city}/token.json`
+    //     const url = 'https://nkt-mobile-api.herokuapp.com/calendar'
 
-        return fetch(url)
-            .then((response) => response.json())
-            .then((responseJson) => {
-                return responseJson
-            })
-            .catch((error) => {
-                return { 'error': 'no classes returned'}
-            });
-    }
+    //     return fetch(url)
+    //         .then((response) => response.json())
+    //         .then((responseJson) => {
+    //             console.log('getClasses: ', responseJson)
+    //             return responseJson
+    //         })
+    //         .catch((error) => {
+    //             return { 'error': 'no classes returned'}
+    //         });
+    // }
 }

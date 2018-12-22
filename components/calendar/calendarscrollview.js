@@ -34,7 +34,6 @@ export default class CalendarScrollView extends Component {
     }
     
     showClassInfo(item) {
-        console.log('item', item, item.day, item.title)
         this.setState({ item: item, selectedClass: `${item.day} - ${item.title}` })
     }
 
