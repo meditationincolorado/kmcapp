@@ -79,9 +79,14 @@ export default class App extends Component{
     componentDidMount() {
         getUserLocation().then((locationInfo) => {
             getCredentials(locationInfo).then((credentials) => {
-                const creds = JSON.parse(credentials.Body.toString())
+                const creds = credentials.error ? null : JSON.parse(credentials.Body.toString())
+                console.log('creds', creds)
                 this.retrieveContent(creds)
+            }).catch((err) => {
+                console.error(err)
             })
+        }).catch((err) => {
+            console.error(err)
         })
     }
 

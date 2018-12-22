@@ -1,5 +1,6 @@
 import { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY } from 'react-native-dotenv'
 import awsMapping from './AWSmapping.json'
+import { getDistance } from './geolocationAPI'
 
 /* Leverage JSON file */
 const meditationsKey = () => {
@@ -9,11 +10,19 @@ adviceKey = () => {
     return 'advice/'.concat(awsMapping.Default['nkt-mobile-app-content'].adviceJSON)
 },
 credentialsKey = (locationInfo) => {
+    const userDistanceKm = getDistance({
+            latitude: locationInfo.latitude,
+            longitude: locationInfo.longitude
+        }, {
+            latitude: 39.7414,
+            longitude: -104.9931 // KMC Denver
+        })
+
     let { country, state, city } = locationInfo
     state = 'colorado'
     city = 'denver'
 
-    return `google-calendar-api/${country}/${state}/${city}/credentials.json`
+    return userDistanceKm > 0 ? `google-calendar-api/${country}/${state}/${city}/credentials.json` :    `google-calendar-api/credentials.json`
 },
 AWS_CONTENT_BUCKET = 'nkt-mobile-app-content'
 AWS_CREDENTIALS_BUCKET = 'mobile-app-credentials'

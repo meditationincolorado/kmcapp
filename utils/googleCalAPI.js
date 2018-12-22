@@ -1,4 +1,4 @@
-import { GOOGLE_CAL_API_KEY_COLORADO } from 'react-native-dotenv'
+// import { GOOGLE_CAL_API_KEY_COLORADO } from 'react-native-dotenv'
 
 const convertDateForURLParam = (date) => {
     var yyyy = date.getFullYear().toString(),
@@ -33,6 +33,8 @@ addDays = (date, days) => {
 
 module.exports = {
     getClasses: async (creds) => {
+        if(!creds) return { 'error': 'no classes returned'}
+
         const { key, window_in_days } = creds
 
         const now = new Date(),
