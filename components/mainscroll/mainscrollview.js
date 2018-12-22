@@ -31,22 +31,24 @@ export default class MainScrollView extends Component {
     }
 
     render() {
-      return (
-        <View style={styles.container}>
-            <View style={styles.header}>
-                <Text style={styles.headerText}>KMC Colorado!</Text>
+        const { slogan } = this.props.center
+
+        return (
+            <View style={styles.container}>
+                <View style={styles.header}>
+                    <Text style={styles.headerText}>{slogan}</Text>
+                </View>
+                <FlatList
+                    style={styles.options}
+                    data={[{key: 'Classes'}, {key: 'Meditations'}, {key: 'Good Advice'}]}
+                    renderItem={({item}) => 
+                        <TouchableHighlight onPress={() => { this.openFeature(item)}}>
+                            <Text style={styles.option}>{item.key}</Text>
+                        </TouchableHighlight>
+                    }
+                    />
             </View>
-            <FlatList
-                style={styles.options}
-                data={[{key: 'Classes'}, {key: 'Meditations'}, {key: 'Good Advice'}]}
-                renderItem={({item}) => 
-                    <TouchableHighlight onPress={() => { this.openFeature(item)}}>
-                        <Text style={styles.option}>{item.key}</Text>
-                    </TouchableHighlight>
-                }
-             />
-        </View>
-      );
+        );
     }
 }
 

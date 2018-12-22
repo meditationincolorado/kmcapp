@@ -1,7 +1,41 @@
 
 import { GOOGLE_MAPS_API_KEY } from 'react-native-dotenv'
 
-CENTER_MAX_RADIUS_IN_KM = 200
+CENTER_MAX_RADIUS_IN_KM = 1506 // 160.934 // 100 miles (Cupertino is 1505 km away from KMC Colorado)
+
+const getDistance = (p1, p2) => {
+    const rad = (x) => {
+        return x * Math.PI / 180;
+    }
+
+    var R = 6378137; // Earth’s mean radius in meter
+    var dLat = rad(p2.latitude - p1.latitude);
+    var dLong = rad(p2.longitude - p1.longitude);
+    var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(rad(p1.latitude)) * Math.cos(rad(p2.latitude)) *
+      Math.sin(dLong / 2) * Math.sin(dLong / 2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    let d = (R * c) / 1000
+    return d // returns the distance in km
+}, findClosestCenter = (obj, locationInfo) => {
+    let closestCenter = obj.centers[0],
+        minDistance = CENTER_MAX_RADIUS_IN_KM
+
+    const centers = obj.centers,
+        userLoc = { latitude: locationInfo.latitude, longitude: locationInfo.longitude }
+
+    for(let i = 1; i < centers.length; i++) { // Skip 0 (default "center")
+        const center = centers[i],
+            distance = getDistance(userLoc, center.coords)
+
+        if(distance < minDistance) {
+            minDistance = distance
+            closestCenter = center
+        }
+    }
+
+    return closestCenter
+}
 
 module.exports = {
     getUserLocation: async () => {
@@ -39,19 +73,9 @@ module.exports = {
             return { 'error': error }
         }
     },
-    getDistance: (p1, p2) => {
-        const rad = (x) => {
-            return x * Math.PI / 180;
-        }
-
-        var R = 6378137; // Earth’s mean radius in meter
-        var dLat = rad(p2.latitude - p1.latitude);
-        var dLong = rad(p2.longitude - p1.longitude);
-        var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-          Math.cos(rad(p1.latitude)) * Math.cos(rad(p2.latitude)) *
-          Math.sin(dLong / 2) * Math.sin(dLong / 2);
-        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        let d = (R * c) / 1000
-        return d < CENTER_MAX_RADIUS_IN_KM ? d : -1 // returns the distance in km
+    getClosestCenter: (obj, locationInfo) => {
+        let closestCenter = findClosestCenter(obj, locationInfo)
+        console.log('obj', obj)
+        return closestCenter
     }
 }

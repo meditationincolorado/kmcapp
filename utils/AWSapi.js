@@ -1,6 +1,5 @@
 import { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY } from 'react-native-dotenv'
 import awsMapping from './AWSmapping.json'
-import { getDistance } from './geolocationAPI'
 
 /* Leverage JSON file */
 const meditationsKey = () => {
@@ -10,14 +9,6 @@ adviceKey = () => {
     return 'advice/'.concat(awsMapping.Default['nkt-mobile-app-content'].adviceJSON)
 },
 credentialsKey = (locationInfo) => {
-    const userDistanceKm = getDistance({
-            latitude: locationInfo.latitude,
-            longitude: locationInfo.longitude
-        }, {
-            latitude: 39.7414,
-            longitude: -104.9931 // KMC Denver
-        })
-
     let { country, state, city } = locationInfo
     state = 'colorado'
     city = 'denver'
@@ -61,10 +52,10 @@ module.exports = {
             return data
         });
     },
-    getCredentials: async (locationInfo) => {
+    getCenters: async (locationInfo) => {
         const params = {
-            'Bucket': AWS_CREDENTIALS_BUCKET,
-            'Key': credentialsKey(locationInfo)
+            'Bucket': 'center-info', //AWS_CREDENTIALS_BUCKET,
+            'Key': 'credentials.json' //credentialsKey(locationInfo)
         }
         
         return await s3.getObject(params, (err) => {

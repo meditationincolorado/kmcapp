@@ -32,18 +32,18 @@ addDays = (date, days) => {
 }
 
 module.exports = {
-    getClasses: async (creds) => {
-        if(!creds) return { 'error': 'no classes returned'}
+    getClasses: async (closestCenter) => {
+        if(!closestCenter) return { 'error': 'no classes returned'}
 
-        const { key, window_in_days } = creds
+        const { GOOGLE_CAL_API_KEY, calendar_window_in_days } = closestCenter.calendar
 
         const now = new Date(),
-            later = addDays(now, parseInt(window_in_days)),
+            later = addDays(now, parseInt(calendar_window_in_days)),
             offset = createOffset(now),
             time = `00:00:00${offset}`,
             today = convertDateForURLParam(now) + 'T' + time,
             apiString = 'https://www.googleapis.com/calendar/v3/calendars/',
-            apiKeyParam = `?key=${key}`, // was GOOGLE_CAL_API_KEY_COLORADO
+            apiKeyParam = `?key=${GOOGLE_CAL_API_KEY}`, // was GOOGLE_CAL_API_KEY_COLORADO
             getEvents = '/events',
             singleEvents = '&singleEvents=true',
             orderBy = '&orderBy=startTime',

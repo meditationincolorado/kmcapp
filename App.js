@@ -4,9 +4,9 @@ import MainScrollView from './components/mainscroll/mainscrollview'
 import CalendarScrollView from './components/calendar/calendarscrollview'
 import MediationsScrollView from './components/meditations/meditationsscrollview'
 import AdviceScrollView from './components/advice/advicescrollview'
-import { getCredentials, getAdvice, getMeditations } from './utils/AWSapi'
+import { getCenters, getAdvice, getMeditations } from './utils/AWSapi'
 import { getClasses } from './utils/googleCalAPI'
-import { getUserLocation } from './utils/geolocationAPI'
+import { getUserLocation, getClosestCenter } from './utils/geolocationAPI'
 
 /* AWS */
 import { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY } from 'react-native-dotenv'
@@ -34,7 +34,7 @@ export default class App extends Component{
       error: null,
       activeView: 'Main',
       isLoading: true,
-      awsCredsResponse: null,
+      closestCenter: null,
       classesResult: null,
       dharmaResult: null,
       meditationsResult: null,
@@ -54,19 +54,19 @@ export default class App extends Component{
         this.setState({ activeView: feature })
     }
 
-    retrieveContent(creds) {
+    retrieveContent(closestCenter) {
         const setStateProxy = (classes, meditations, advice) => {
             this.setState({
                 classesResult: classes,
                 meditationsResult: JSON.parse(meditations.response.data.Body.toString('utf-8')),
                 dharmaResult: JSON.parse(advice.response.data.Body.toString('utf-8')),
-                awsCredsResponse: creds,
+                closestCenter: closestCenter,
                 isLoading: false
             })
         }
 
         Promise.all([
-            getClasses(creds),
+            getClasses(closestCenter),
             getMeditations(),
             getAdvice(),
         ]).then(function ([classes, meditations, advice]){
@@ -78,10 +78,15 @@ export default class App extends Component{
 
     componentDidMount() {
         getUserLocation().then((locationInfo) => {
-            getCredentials(locationInfo).then((credentials) => {
-                const creds = credentials.error ? null : JSON.parse(credentials.Body.toString())
-                console.log('creds', creds)
-                this.retrieveContent(creds)
+            getCenters(locationInfo).then((centers) => {
+                const allCenters = JSON.parse(centers.Body.toString()),
+                    closestCenter = getClosestCenter(allCenters, locationInfo)
+
+                this.setState({
+                    slogan: closestCenter.slogan
+                })
+
+                this.retrieveContent(closestCenter)
             }).catch((err) => {
                 console.error(err)
             })
@@ -113,7 +118,7 @@ export default class App extends Component{
                 {loaded && this.state.activeView === 'Classes' ? <CalendarScrollView  apiResult={this.state.classesResult} /> : null}
                 {loaded && this.state.activeView === 'Meditations' ? <MediationsScrollView apiResult={this.state.meditationsResult} /> : null}
                 {loaded && this.state.activeView === 'Good Advice' ? <AdviceScrollView apiResult={this.state.dharmaResult} /> : null}
-                {loaded && this.state.activeView === 'Main' ? <MainScrollView onClick={this.handleMenuSelection.bind()} /> : null}
+                {loaded && this.state.activeView === 'Main' ? <MainScrollView onClick={this.handleMenuSelection.bind()} center={this.state.closestCenter} /> : null}
 
             </ImageBackground>
         );
