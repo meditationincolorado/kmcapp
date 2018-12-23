@@ -5,7 +5,8 @@ import {
     StyleSheet,
     Text ,
     TouchableHighlight,
-    Dimensions} 
+    Dimensions
+} 
 from 'react-native';
 import {scrollview, mainColor} from '../../assets/css/constants'
 import ModalView from '../modal/modalview'

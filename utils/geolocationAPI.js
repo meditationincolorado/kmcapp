@@ -34,6 +34,7 @@ const getDistance = (p1, p2) => {
         }
     }
 
+    console.log('minDistance', minDistance)
     return closestCenter
 }
 
@@ -55,6 +56,7 @@ module.exports = {
             return await fetch(url)
                 .then((response) => response.json())
                 .then((responseJson) => {
+                    console.log('responseJson', responseJson)
                     return {
                         results_ct: responseJson.results.length,
                         number: responseJson.results[0].address_components[0],
@@ -75,7 +77,6 @@ module.exports = {
     },
     getClosestCenter: (obj, locationInfo) => {
         let closestCenter = findClosestCenter(obj, locationInfo)
-        console.log('obj', obj)
         return closestCenter
     }
 }

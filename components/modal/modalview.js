@@ -7,11 +7,27 @@ import {
 from 'react-native';
 import {modal, mainColor} from '../../assets/css/constants'
 
+// ios Helpful link: https://github.com/zmxv/react-native-sound/issues/352
+import Sound from 'react-native-sound'
+Sound.setCategory('Playback')
+
 export default class ModalView extends Component {
     constructor(props) {
       super(props);
     }
     
+    playMeditation(title) {
+        console.log('title', title)
+        var audio = new Sound('dark-light-intro.mp3', Sound.MAIN_BUNDLE, (error) => {
+            if (error) {
+                console.log('failed to load the sound', error);
+                return;
+            } else {
+                audio.play(); 
+            }
+        });
+    }
+
     renderModal() {
         if(this.props.type === 'class') {
             const item = this.props.item
@@ -47,6 +63,10 @@ export default class ModalView extends Component {
                     <Text style={styles.description}>{item.description}</Text>
                     <Text style={styles.description}>Duration: {item.duration}</Text>
                     <Text style={styles.description}>with {item.artist}</Text>
+                    <TouchableHighlight onPress={this.playMeditation.bind(this, item.key)}>
+                        <Text>Play</Text>
+                    </TouchableHighlight>
+
                 </View>
             )
         } else {

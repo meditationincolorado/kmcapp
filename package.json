@@ -10,6 +10,7 @@
     "aws-sdk": "^2.361.0",
     "react": "16.6.1",
     "react-native": "0.57.5",
+    "react-native-sound": "^0.10.9",
     "styled-components": "^4.1.1"
   },
   "devDependencies": {

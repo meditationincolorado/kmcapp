@@ -78,6 +78,7 @@ export default class App extends Component{
 
     componentDidMount() {
         getUserLocation().then((locationInfo) => {
+            console.log('locationInfo', locationInfo)
             getCenters(locationInfo).then((centers) => {
                 const allCenters = JSON.parse(centers.Body.toString()),
                     closestCenter = getClosestCenter(allCenters, locationInfo)
