@@ -3,9 +3,9 @@
         "mobile-app-credentials": {
 
         },
-        "nkt-mobile-app-content": {
-            "adviceJSON": "good_advice.json",
-            "meditationsJSON": "english_meditations.json"
+        "nkt-app-content": {
+            "adviceJSON": "advice_english.json",
+            "meditationsJSON": "english/meditations.json"
         }
     },
     "Africa": {

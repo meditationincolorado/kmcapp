@@ -70,6 +70,9 @@ export default class App extends Component{
             getMeditations(),
             getAdvice(),
         ]).then(function ([classes, meditations, advice]){
+            const medTest = JSON.parse(meditations.response.data.Body.toString('utf-8'))
+            console.log('meditations===>', medTest, typeof medTest, JSON.parse(meditations.response.data.Body.toString('utf-8')))
+            console.log('advice===>', advice, typeof advice, JSON.parse(advice.response.data.Body.toString('utf-8')))
             setStateProxy(classes, meditations, advice)
         }).catch((error) => {
             console.error(error)

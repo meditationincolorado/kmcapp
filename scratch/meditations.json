@@ -1,0 +1,11 @@
+{
+    "recordings": [
+        {
+            "key": "Kindness of Others",
+            "description": "Cultivating gratitude for all living beings",
+            "artist": "Jason Bryant",
+            "intro": "https://s3.amazonaws.com/nkt-app-meditations/dark-light-intro.mp3",
+            "meditation": "https://s3.amazonaws.com/nkt-app-meditations/dark-light-meditation.mp3"
+        }
+    ]
+}

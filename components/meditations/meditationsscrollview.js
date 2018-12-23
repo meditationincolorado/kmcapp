@@ -10,8 +10,10 @@ import {
 from 'react-native';
 import {scrollview, mainColor} from '../../assets/css/constants'
 import ModalView from '../modal/modalview'
+import meditations from './meditations';
 
-let dim = Dimensions.get('screen')
+let dim = Dimensions.get('screen'),
+    attemptedNetwork = false
 
 export default class MeditationsScrollView extends Component {
     constructor(props) {
@@ -24,18 +26,27 @@ export default class MeditationsScrollView extends Component {
 
       this.showMeditationInfo = this.showMeditationInfo.bind(this);
     }
+
+    generateMeditationsArray() {
+        const importedRecordings = this.props.apiResult.recordings
+
+        for(let i = 0; i < importedRecordings.length; i++) {
+            meditations.recordings.push(importedRecordings[i])
+        }
+
+        attemptedNetwork = true
+    }
     
     showMeditationInfo(item) {
         this.setState({ item: item})
     }
 
     componentDidMount() {
-        const temp = this.props.apiResult
+        if(!attemptedNetwork) this.generateMeditationsArray()
     }
 
     render() {
-        const meditations = this.props.apiResult
-        
+
         return (
             <View style={styles.container}>
                 {this.state.item &&  <ModalView type={'meditation'} item={this.state.item}/> }

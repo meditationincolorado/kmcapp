@@ -13,19 +13,68 @@ Sound.setCategory('Playback')
 
 export default class ModalView extends Component {
     constructor(props) {
-      super(props);
+        super(props)
+
+        this.state = {
+            playingMeditation: false,
+            introDuration: 0,
+            meditationDuration: 0
+        }
+        
+        this.handleAudio = this.handleAudio.bind(this)
     }
     
-    playMeditation(title) {
-        console.log('title', title)
-        var audio = new Sound('dark-light-intro.mp3', Sound.MAIN_BUNDLE, (error) => {
+    displayAudioDuration(totalSeconds) {
+        const seconds = Math.round(totalSeconds % 60),
+            minutes = Math.floor(totalSeconds / 60)
+
+        return `${minutes}m ${seconds}s`
+    }
+
+    getDurations(item) {
+        if (this.state.introDuration === 0) {
+            const intro = new Sound(item.intro, Sound.MAIN_BUNDLE, (error) => {
+                if (error) {
+                    return
+                } else {
+                    this.setState({ introDuration: intro.getDuration() })
+                }
+            }) 
+        }
+        if(this.state.meditationDuration === 0){
+            const meditation = new Sound(item.meditation, Sound.MAIN_BUNDLE, (error) => {
+                if (error) {
+                    return
+                } else {
+                    this.setState({ meditationDuration: meditation.getDuration() })
+                }
+            }) 
+        }
+    }
+
+    handleAudio(item, type) {
+        const { intro, meditation } = item
+        if(!intro || !meditation) return
+
+        const audioFile = type === 'intro' ? intro : meditation,
+            option = audioFile.includes('https://s3.amazonaws.com') ? null : Sound.MAIN_BUNDLE
+
+        const audio = new Sound(audioFile, option, (error) => {
             if (error) {
-                console.log('failed to load the sound', error);
-                return;
+                console.log('failed to load the sound', error) 
+                return
             } else {
-                audio.play(); 
+                this.setState({ 
+                    playingMeditation: !this.state.playingMeditation 
+                }, ()=> {
+                    if(this.state.playingMeditation) {
+                        audio.play()
+                    } else {
+                        audio.stop()
+                    }
+                })
             }
-        });
+        })
     }
 
     renderModal() {
@@ -57,14 +106,18 @@ export default class ModalView extends Component {
         } else if(this.props.type === 'meditation') {
             const item = this.props.item
 
+            if(item.intro && item.meditation) this.getDurations(item)
+
             return(
                 <View style={styles.container}>
                     <Text style={styles.title}>{item.key}</Text>
                     <Text style={styles.description}>{item.description}</Text>
-                    <Text style={styles.description}>Duration: {item.duration}</Text>
                     <Text style={styles.description}>with {item.artist}</Text>
-                    <TouchableHighlight onPress={this.playMeditation.bind(this, item.key)}>
-                        <Text>Play</Text>
+                    <TouchableHighlight onPress={() => this.handleAudio(item, 'intro')}> 
+                        <Text>Intro {this.displayAudioDuration(this.state.introDuration)}</Text>
+                    </TouchableHighlight>
+                    <TouchableHighlight onPress={() => this.handleAudio(item, 'meditation')}> 
+                        <Text>Meditation {this.displayAudioDuration(this.state.meditationDuration)}</Text>
                     </TouchableHighlight>
 
                 </View>
@@ -74,9 +127,7 @@ export default class ModalView extends Component {
         }
     }
 
-    componentDidMount() {
-        console.log('props', this.props)
-    }
+    componentDidMount() {}
 
     render() {
         return (

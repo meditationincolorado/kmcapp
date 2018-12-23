@@ -3,10 +3,10 @@ import awsMapping from './AWSmapping.json'
 
 /* Leverage JSON file */
 const meditationsKey = () => {
-    return 'meditations/'.concat(awsMapping.Default['nkt-mobile-app-content'].meditationsJSON)
+    return 'meditations/'.concat(awsMapping.Default['nkt-app-content'].meditationsJSON)
 }, 
 adviceKey = () => {
-    return 'advice/'.concat(awsMapping.Default['nkt-mobile-app-content'].adviceJSON)
+    return 'advice/'.concat(awsMapping.Default['nkt-app-content'].adviceJSON)
 },
 credentialsKey = (locationInfo) => {
     let { country, state, city } = locationInfo
@@ -15,7 +15,7 @@ credentialsKey = (locationInfo) => {
 
     return userDistanceKm > 0 ? `google-calendar-api/${country}/${state}/${city}/credentials.json` :    `google-calendar-api/credentials.json`
 },
-AWS_CONTENT_BUCKET = 'nkt-mobile-app-content'
+AWS_CONTENT_BUCKET = 'nkt-app-content'
 AWS_CREDENTIALS_BUCKET = 'mobile-app-credentials'
 
 /* AWS Connection */
