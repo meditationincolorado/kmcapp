@@ -99,8 +99,9 @@ export default class ModalView extends Component {
             return(
                 <View style={styles.container}>
                     <Text style={styles.title}>{item.key}</Text>
-                    <Text style={styles.description}>{`"${item.books[bookIndex].quotes[quoteIndex].text}"`}</Text>
-                    <Text style={styles.description}>{`~ ${item.books[bookIndex].author}, ${item.books[bookIndex].title}`}</Text>
+                    <Text style={styles.description}>{`${item.books[bookIndex].quotes[quoteIndex].text}`}</Text>
+                    <Text style={styles.description}>{`~ ${item.books[bookIndex].author}`}</Text>
+                    <Text style={styles.description}>{`${item.books[bookIndex].title}`}</Text>
                 </View>
             )
         } else if(this.props.type === 'meditation') {

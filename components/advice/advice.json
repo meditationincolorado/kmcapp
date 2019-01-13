@@ -54,7 +54,7 @@
                             "text": "For instance, when someone out of anger or jealousy harms or insults us, with our mind abiding in love and compassion we should happily accept the harm and not retaliate—this is the meaning of accepting defeat and offering the victory to others."
                         }
                     ]
-                },{
+                }, {
                     "title": "How to Transform Your Life",
                     "author": "Geshe Kelsang Gyatso",
                     "quotes": [
@@ -63,7 +63,7 @@
                             "text": "If we were to respond to difficult situations with a positive or peaceful mind, they would not be problems for us; indeed, we may even come to regard them as challenges or opportunities for growth and development."
                         }
                     ]
-                },{
+                }, {
                     "title": "How to Solve Our Human Problems",
                     "author": "Geshe Kelsang Gyatso",
                     "quotes": [
@@ -96,7 +96,7 @@
                             "text": "By accepting the comparatively insignificant suffering we experience in the human realm, and using it to increase our renunciation, compassion, and other spiritual realizations, we can quickly attain the supreme happiness of full enlightenment and become of benefit to all living beings."
                         }
                     ]
-                },{
+                }, {
                     "title": "Universal Compassion",
                     "author": "Geshe Kelsang Gyatso",
                     "quotes": [
@@ -108,7 +108,7 @@
                             "text": "For example, if we become sick, poor, friendless, or meet with terrible accidents; if we are ignored, slandered, or physically assaulted; if we suffer mental anguish, depression, and so on, we should remember the teachings on karma and immediately recognize that all these difficult situations are the result of our own past negative actions."
                         }, {
                             "page": 60,
-                            "text": "We should try to learn from adversities and think: ‘My experiencing these adverse conditions is a reminder that if I want to be free from the sufferings they bring I must purify the negative actions that I have accumulated."
+                            "text": "We should try to learn from adversities and think: \"My experiencing these adverse conditions is a reminder that if I want to be free from the sufferings they bring I must purify the negative actions that I have accumulated.\""
                         }, {
                             "page": 60,
                             "text": "Therefore, when sufferings arise we should view them as a lesson on the dangers of samsara and encourage ourself to seek liberation."
@@ -144,117 +144,120 @@
                 }
             ]
         }, {
-            "key": "Attachment",
-            "books": [
-                {
-                    "title": "Modern Buddhism",
-                    "author": "Geshe Kelsang Gyatso",
-                    "quotes": [
-                        {
-                            "page": 38,
-                            "text": "Lorem Ipsum"
-                        },{
-                            "page": 39,
-                            "text": "Lorem Ipsum"
-                        }
-                    ]
-                },{
-                    "title": "Universal Compassion",
-                    "author": "Geshe Kelsang Gyatso",
-                    "quotes": [
-                        {
-                            "page": 38,
-                            "text": "Cave Canum"
-                        },{
-                            "page": 39,
-                            "text": "Cave Canum"
-                        }
-                    ]
-                }
-            ]
-        },{
-            "key": "Confusion",
-            "books": [
-                {
-                    "title": "Modern Buddhism",
-                    "author": "Geshe Kelsang Gyatso",
-                    "quotes": [
-                        {
-                            "page": 38,
-                            "text": "Lorem Ipsum"
-                        },{
-                            "page": 39,
-                            "text": "Lorem Ipsum"
-                        }
-                    ]
-                },{
-                    "title": "Universal Compassion",
-                    "author": "Geshe Kelsang Gyatso",
-                    "quotes": [
-                        {
-                            "page": 38,
-                            "text": "Cave Canum"
-                        },{
-                            "page": 39,
-                            "text": "Cave Canum"
-                        }
-                    ]
-                }
-            ]
-        },{
             "key": "Jealousy",
             "books": [
                 {
+                    "title": "Meaningful to Behold",
+                    "author": "Geshe Kelsang Gyatso",
+                    "quotes": [
+                        {
+                            "page": 81,
+                            "text": "While rejoicing in others’ good fortune brings us happiness and benefit, jealousy does nothing but harm our mind."
+                        },{
+                            "page": 81,
+                            "text": "However, if the comfort of others provokes jealousy in our mind, we shall experience unhappiness in both the present and the future."
+                        }, {
+                            "page": 81,
+                            "text": "When we rejoice in the happiness and comfort of others we create the cause for enjoying such experiences ourselves."
+                        }, {
+                            "page": 81,
+                            "text": "Jealousy not only destroys our virtue and pulls us down, but it makes it impossible for us to develop the precious bodhichitta."
+                        }, {
+                            "page": 81,
+                            "text": "From fights between neighbours to wars between nations, a frequent source of conflict is the deluded mind of jealousy."
+                        }, {
+                            "page": 81,
+                            "text": "Thus in the same way that anger is overcome by our practice of love and patience and our attachment can be lessened by meditating on a desirable object’s unpleasant or repulsive characteristics, so too can we counteract the jealous mind by rejoicing in the virtues of others."
+                        }, {
+                            "page": 156,
+                            "text": "On the other hand, if we are jealous of other peoples’ good qualities, ungrateful and overly critical, our own mind shall become unhappy and disturbed and we shall be planting the seeds to experience much suffering in the future."
+                        }, {
+                            "page": 189,
+                            "text": "If someone who is our rival is praised, instead of becoming jealous we should be happy and rejoice."
+                        }, {
+                            "page": 190,
+                            "text": "Jealousy is one of the most senseless and purposeless of all the delusions."
+                        }, {
+                            "page": 190,
+                            "text": "Furthermore, generating jealousy on the one hand yet wishing to obtain wealth and possessions on the other are contradictory states of mind."
+                        }
+                    ]
+                }, {
                     "title": "Modern Buddhism",
                     "author": "Geshe Kelsang Gyatso",
                     "quotes": [
                         {
-                            "page": 38,
-                            "text": "Lorem Ipsum"
+                            "page": 45,
+                            "text": "Our jealousy is like a thorn piercing our mind, causing us to experience both mental and physical suffering for long periods of time."
+                        }, {
+                            "page": 227,
+                            "text": "Jealousy is very harmful for individuals and society. In an instant it can destroy our own and others’ happiness and harmony and lead to fighting, or even war."
                         },{
-                            "page": 39,
-                            "text": "Lorem Ipsum"
+                            "page": 227,
+                            "text": "Our problems of jealousy can be solved simply by learning to rejoice in other’s happiness and goodness."
                         }
                     ]
-                },{
-                    "title": "Universal Compassion",
+                }, {
+                    "title": "How to Solve Our Human Problems",
                     "author": "Geshe Kelsang Gyatso",
                     "quotes": [
                         {
-                            "page": 38,
-                            "text": "Cave Canum"
-                        },{
-                            "page": 39,
-                            "text": "Cave Canum"
+                            "page": 47,
+                            "text": "When a rival is successful or praised, it is very easy to feel jealous, but why should someone else’s happiness make us unhappy?"
+                        }, {
+                            "page": 74,
+                            "text": "When a jealous person sees signs of other people’s success and good fortune, his heart is pierced with envy. But someone who has learned to rejoice in the good fortune of others experiences only happiness."
+                        }, {
+                            "page": 75,
+                            "text": "Rejoicing in other people’s happiness or good qualities is one of the purest of all virtuous minds, because it is unstained by self-cherishing."
+                        }, {
+                            "page": 75,
+                            "text": "Rejoicing in the good fortune of others creates the cause for us to enjoy similar good fortune in the future, and rejoicing in the good qualities of others creates the cause for us to develop similar qualities."
+                        }, {
+                            "page": 75,
+                            "text": "Rejoicing is the easiest way to increase our merit, it delights all the Buddhas, and it is the supreme method for gathering a circle of friends."
                         }
                     ]
-                }
-            ]
-        },{
-            "key": "Pride",
-            "books": [
-                {
-                    "title": "Modern Buddhism",
+                }, {
+                    "title": "How to Understand the Mind",
                     "author": "Geshe Kelsang Gyatso",
                     "quotes": [
                         {
-                            "page": 38,
-                            "text": "Lorem Ipsum"
-                        },{
-                            "page": 39,
-                            "text": "Lorem Ipsum"
+                            "page": 151,
+                            "text": "Jealousy is entirely futile because neither does it cause the other person’s fortune or good qualities to decline, nor does it increase our own; all it does is to rob us of our own peace and happiness."
+                        }, {
+                            "page": 152,
+                            "text": "Those with great wisdom never become jealous because they have a deep understanding of the faults of jealousy."
                         }
                     ]
-                },{
-                    "title": "Universal Compassion",
+                }, {
+                    "title": "The New Eight Steps to Happiness",
                     "author": "Geshe Kelsang Gyatso",
                     "quotes": [
                         {
-                            "page": 38,
-                            "text": "Cave Canum"
-                        },{
-                            "page": 39,
-                            "text": "Cave Canum"
+                            "page": 58,
+                            "text": "Jealousy, for example, is a state of mind that cannot bear another’s good fortune, but if we cherish someone how can his or her good fortune disturb our mind?"
+                        }
+                    ]
+                }, {
+                    "title": "The New Meditation Handbook",
+                    "author": "Geshe Kelsang Gyatso",
+                    "quotes": [
+                        {
+                            "page": 144,
+                            "text": "Rejoicing in virtue increases our virtuous tendencies and overcomes jealousy andcompetitiveness."
+                        }
+                    ]
+                }, {
+                    "title": "Universal Comppassion",
+                    "author": "Geshe Kelsang Gyatso",
+                    "quotes": [
+                        {
+                            "page": 22,
+                            "text": "If we practice cherishing others sincerely in this life we shall resolve our many problems of anger, jealousy, and so forth, and our mind will always be calm and peaceful."
+                        }, {
+                            "page": 92,
+                            "text": "If our greatest problem is jealousy we should emphasize overcoming this delusion by meditating on love and compassion, and by rejoicing in the good qualities of others."
                         }
                     ]
                 }
