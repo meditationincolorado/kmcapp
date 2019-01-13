@@ -7,10 +7,10 @@ import {
     TouchableHighlight,
     Dimensions
 } 
-from 'react-native';
+from 'react-native'
 import {scrollview, mainColor} from '../../assets/css/constants'
 import ModalView from '../modal/modalview'
-import meditations from './meditations';
+import meditations from './meditations'
 
 let dim = Dimensions.get('screen'),
     attemptedNetwork = false
@@ -28,10 +28,12 @@ export default class MeditationsScrollView extends Component {
     }
 
     generateMeditationsArray() {
-        const importedRecordings = this.props.apiResult.recordings
-
-        for(let i = 0; i < importedRecordings.length; i++) {
-            meditations.recordings.push(importedRecordings[i])
+        if(this.props.apiResult != null) {
+            const importedRecordings = this.props.apiResult.recordings
+        
+            for(let i = 0; i < importedRecordings.length; i++) {
+                meditations.recordings.push(importedRecordings[i])
+            }
         }
 
         attemptedNetwork = true

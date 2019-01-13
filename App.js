@@ -34,7 +34,7 @@ export default class App extends Component{
       error: null,
       activeView: 'Main',
       isLoading: true,
-      closestCenter: null,
+      closestCenter: [],
       classesResult: null,
       dharmaResult: null,
       meditationsResult: null,
@@ -56,13 +56,18 @@ export default class App extends Component{
 
     retrieveContent(closestCenter) {
         const setStateProxy = (classes, meditations, advice) => {
-            this.setState({
-                classesResult: classes,
-                meditationsResult: JSON.parse(meditations.response.data.Body.toString('utf-8')),
-                dharmaResult: JSON.parse(advice.response.data.Body.toString('utf-8')),
-                closestCenter: closestCenter,
-                isLoading: false
-            })
+            if(!meditations.response.data || !advice.response.data) {
+                this.setState({ isLoading: false })
+                return
+            } else {
+                this.setState({
+                    classesResult: classes,
+                    meditationsResult: JSON.parse(meditations.response.data.Body.toString('utf-8')),
+                    dharmaResult: JSON.parse(advice.response.data.Body.toString('utf-8')),
+                    closestCenter: closestCenter,
+                    isLoading: false
+                })
+            }
         }
 
         Promise.all([
@@ -70,9 +75,6 @@ export default class App extends Component{
             getMeditations(),
             getAdvice(),
         ]).then(function ([classes, meditations, advice]){
-            const medTest = JSON.parse(meditations.response.data.Body.toString('utf-8'))
-            console.log('meditations===>', medTest, typeof medTest, JSON.parse(meditations.response.data.Body.toString('utf-8')))
-            console.log('advice===>', advice, typeof advice, JSON.parse(advice.response.data.Body.toString('utf-8')))
             setStateProxy(classes, meditations, advice)
         }).catch((error) => {
             console.error(error)
@@ -97,6 +99,10 @@ export default class App extends Component{
         }).catch((err) => {
             console.error(err)
         })
+
+        setTimeout(()=> {
+            console.log('test state:', this.state)
+        }, 2000)
     }
 
     goHome() {

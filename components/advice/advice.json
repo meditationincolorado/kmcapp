@@ -1,18 +1,99 @@
 {
     "delusions": [
         {
-            "key": "Anger",
+            "key": "Adversity",
             "books": [
                 {
-                    "title": "Modern Buddhism",
+                    "title": "The New Eight Steps to Happiness",
                     "author": "Geshe Kelsang Gyatso",
                     "quotes": [
                         {
-                            "page": 38,
-                            "text": "Lorem Ipsum"
+                            "page": 25,
+                            "text": "Rather than being an obstacle to our spiritual progress, the impurities of this present age can become fuel for our spiritual practice."
+                        }, {
+                            "page": 25,
+                            "text": "Since in these degenerate times we are constantly surrounded by objects of attachment and aversion, we definitely need to learn how to transform them into the spiritual path bu training our mind."
+                        }, {
+                            "page": 143,
+                            "text": "When someone we have helped repays our kindness by harming us, instead of getting angry we should try to see that person as a Spiritual Teacher and generate a mind of gratitude toward him or her."
                         },{
-                            "page": 39,
-                            "text": "Lorem Ipsum"
+                            "page": 144,
+                            "text": "This situation is encouraging me to abandon samsaric rebirth, so instead of getting angry or discouraged I must abandon samsaric rebirth and generate the joyful mind of renunciation—a sincere wish to attain the permanent inner peace of liberation."
+                        }, {
+                            "page": 145,
+                            "text": "This person who is harming or disturbing me is in reality encouraging me to practice patiernce; and since it is impossible to make progress on the spiritual path without developing the strong mind of patience, he or she is of great benefit to me."
+                        }, {
+                            "page": 145,
+                            "text": "In many ways, those who harm us are the kindest of all because they shatter our complacent view that sees samsara as a pleasure garden, and, like a powerful Spiritual Guide, they inspire us to engage more strongly in spiritual practice."
+                        }, {
+                            "page": 146,
+                            "text": "Having taken rebirth in samsara we have to experience unsatisfactory relationships—it is impossible to find pure friends in this impure world."
+                        },  {
+                            "page": 146,
+                            "text": "If we really want to enjoy pure, harmonious relationships we must abandon samsara."
+                        }, {
+                            "page": 146,
+                            "text": "If we wish to live in a pure environment, or to find a place where we will always feel at home, we need to purify our mind by developing universal love and compassion."
+                        }, {
+                            "page": 146,
+                            "text": "Practitioners of training the mind, however, are like peacocks, which are said to thrive on plants that are poisonous to other birds, because they can transform both attractive and unattractive objects into the spiritual path."
+                        }, {
+                            "page": 147,
+                            "text": "Instead of allowing adversities to make us unhappy and discouraged we can use them to enhance our experience of the stages of the spiritual path, and thereby maintain a pure and peaceful mind all the time."
+                        },  {
+                            "page": 147,
+                            "text": "Our normal reaction when faced with a problem is to try and find someone to blame, but if we look at the situation with wisdom we will realize that we created the cause of that problem through our negative actions."
+                        }, {
+                            "page": 147,
+                            "text": "Instead of blaming others for our problems, we should use our misfortunes to deepen our understanding of karma."
+                        }, {
+                            "page": 147,
+                            "text": "By training our mind to recognize the spiritual lessons in all our experiences, we can come to view everyone and everything as our Spiritual Teacher, and we can turn any and every situation to our advantage."
+                        }, {
+                            "page": 151,
+                            "text": "For instance, when someone out of anger or jealousy harms or insults us, with our mind abiding in love and compassion we should happily accept the harm and not retaliate—this is the meaning of accepting defeat and offering the victory to others."
+                        }
+                    ]
+                },{
+                    "title": "How to Transform Your Life",
+                    "author": "Geshe Kelsang Gyatso",
+                    "quotes": [
+                        {
+                            "page": 10,
+                            "text": "If we were to respond to difficult situations with a positive or peaceful mind, they would not be problems for us; indeed, we may even come to regard them as challenges or opportunities for growth and development."
+                        }
+                    ]
+                },{
+                    "title": "How to Solve Our Human Problems",
+                    "author": "Geshe Kelsang Gyatso",
+                    "quotes": [
+                        {
+                            "page": 35,
+                            "text": "As long as we are in samsara, we cannot avoid unpleasant, difficult situations and a certain amount of physical discomfort, but by training our mind to look at frustrating situations in a more realistic way, we can free ourself from a lot of unnecessary mental suffering."
+                        }, {
+                            "page": 40,
+                            "text": "When we learn to accept difficult circumstances patiently, the real problem disappears."
+                        }, {
+                            "page": 41,
+                            "text": "There is a certain mental stability to be gained from simply recognizing that every experience of pain or discomfort is the fault of our being trapped in samsara—of our being born, living, and dying in a state of unknowing and confusion."
+                        }, {
+                            "page": 43,
+                            "text": "Circumstances or other people have no power to make us feel bad—the most they can do is trigger the potentials for painful feelings that already exist within our own mind."
+                        }, {
+                            "page": 47,
+                            "text": "Renunciation and compassion are two of the most important spiritual realizations, and it is our suffering that enables us to gain these realizations."
+                        }, {
+                            "page": 47,
+                            "text": "Those who do not learn to face the truth of suffering with courage, and to accept their own problems patiently, will not only feel helpless and unhappy but also deprive themselves of the opportunity to develop any authentic spiritual realizations."
+                        }, {
+                            "page": 64,
+                            "text": "All the harm we receive is the result of the deluded actions that we ourself have created, and so it is completely inappropriate to blame this suffering on others."
+                        }, {
+                            "page": 67,
+                            "text": "Whenever we are harmed, abused, criticized, and so forth, the opportunity arises to create immense inner wealth."
+                        }, {
+                            "page": 74,
+                            "text": "By accepting the comparatively insignificant suffering we experience in the human realm, and using it to increase our renunciation, compassion, and other spiritual realizations, we can quickly attain the supreme happiness of full enlightenment and become of benefit to all living beings."
                         }
                     ]
                 },{
@@ -20,11 +101,44 @@
                     "author": "Geshe Kelsang Gyatso",
                     "quotes": [
                         {
-                            "page": 38,
-                            "text": "Cave Canum"
+                            "page": 57,
+                            "text": "We need to transform whatever circumstances we meet, whether good or bad, into the spiritual path by channeling all our actions in a virtuous direction."
                         },{
-                            "page": 39,
-                            "text": "Cave Canum"
+                            "page": 60,
+                            "text": "For example, if we become sick, poor, friendless, or meet with terrible accidents; if we are ignored, slandered, or physically assaulted; if we suffer mental anguish, depression, and so on, we should remember the teachings on karma and immediately recognize that all these difficult situations are the result of our own past negative actions."
+                        }, {
+                            "page": 60,
+                            "text": "We should try to learn from adversities and think: ‘My experiencing these adverse conditions is a reminder that if I want to be free from the sufferings they bring I must purify the negative actions that I have accumulated."
+                        }, {
+                            "page": 60,
+                            "text": "Therefore, when sufferings arise we should view them as a lesson on the dangers of samsara and encourage ourself to seek liberation."
+                        }, {
+                            "page": 61,
+                            "text": "If we use our suffering to develop and strengthen our renunciation, it becomes a wise counselor and a cause for spiritual realizations."
+                        }, {
+                            "page": 61,
+                            "text": "With Dharma wisdom, however, problems and hardships become causes of renunciation and other virtuous minds."
+                        }, {
+                            "page": 61,
+                            "text": "In fact, if we did not experience any adverse conditions it is unlikely that we would generate virtuous minds such as renunciation because it is difficult to develop a genuine wish for freedom while we are enjoying an easy and pleasant life."
+                        }, {
+                            "page": 61,
+                            "text": "When we encounter problems we should think of the countless beings who are experiencing sufferings of every kind, often much more severe than our own, and in this way generate a wish for others to be free from their sufferings."
+                        }, {
+                            "page": 62,
+                            "text": "A person who sincerely practices transforming adverse conditions into the path will find many good qualities in suffering, and so he or she will always remain calm and undaunted."
+                        }, {
+                            "page": 62,
+                            "text": "Faced with any situation of suffering or difficulty, we remember that the three spheres—we, who are experiencing the suffering, the experience of suffering itself, and the object or condition causing our suffering—are empty of inherent existence."
+                        }, {
+                            "page": 64,
+                            "text": "Therefore, any misfortune we experience should immediately urge us to engage in practices for accumulating merit."
+                        }, {
+                            "page": 65,
+                            "text": "The very manifestation of suffering should remind us of its cause, our own negative actions."
+                        }, {
+                            "page": 65,
+                            "text": "The more difficult our circumstances, the more encouraged we should feel to practice purification."
                         }
                     ]
                 }
