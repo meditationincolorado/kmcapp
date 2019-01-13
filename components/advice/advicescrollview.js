@@ -20,45 +20,33 @@ export default class AdviceScrollView extends Component {
   
       this.state = {
         selectedDelusion: null,
-        item: null
+        item: null,
+        adviceArray: advice
       };
 
       this.showAdviceInfo = this.showAdviceInfo.bind(this);
     }
     
-    generateAdviceArray() { // strucuture is diff and needs tweaking
-        const hasKey = (key) => {
-            let keyFound = false
-            for(let i = 0; i < advice.delusions.length; i++) {
-                // const delusion = advice.delusions[i].key   
-                const keyFound = advice.delusions[i].key  === key
-
-            }
-            return keyFound
-        }/*, hasTitle = (key,title) => {
-            let titleFound = false
-            for(let i = 0; i < advice.delusions[key].books.length; i++) {
-                if (advice.delusions[key].books[i].title == title) titleFound = true
-            }
-            return titleFound
-        }*/
-
+    generateAdviceArray() {
         if(this.props.apiResult != null) {
-            const importedAdvice = this.props.apiResult.delusions
-        
-            console.log('generated advice array --------')
-            console.log(advice)
-            console.log(importedAdvice)
-            for(let i = 0; i < importedAdvice.length; i++) {
-                const key = importedAdvice[i].key
+            const importedAdvice = this.props.apiResult.delusions,
+                temp = advice.delusions.concat(importedAdvice)
 
-                if(hasKey(key)) {
-                    console.log('has key!!!')
-                    advice.delusions.push(importedAdvice[i].text)
-                } else {
-                    advice.delusions.push(importedAdvice[i])
+            for(let i = 0; i < temp.length; i++) {
+                for(let j = i + 1; j < temp.length - 1; j++) {
+                    if(temp[i].key === temp[j].key) {
+                        const concatedArr = temp[i].books.concat(temp[j].books)
+                        temp[i].books = concatedArr
+                        temp.splice(j, 1)
+                    }
                 }
             }
+
+            this.setState({
+                adviceArray: { 
+                    'delusions': temp 
+                }
+            })
         }
 
         attemptedNetwork = true
@@ -69,7 +57,7 @@ export default class AdviceScrollView extends Component {
     }
 
     componentDidMount() {
-        // if(!attemptedNetwork) this.generateAdviceArray()
+        if(!attemptedNetwork) this.generateAdviceArray()
     }
 
     render() {
@@ -82,7 +70,7 @@ export default class AdviceScrollView extends Component {
                 </View>
                 <FlatList
                     style={styles.options}
-                    data={advice.delusions}
+                    data={this.state.adviceArray.delusions}
                     renderItem={({item}) =>
                         <TouchableHighlight onPress={() => this.showAdviceInfo(item)}> 
                             <Text style={styles.option}>{item.key}</Text>
